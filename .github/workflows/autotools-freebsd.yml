@@ -1,0 +1,102 @@
+name: autotools-freebsd
+
+on:
+  push:
+    branches: [
+#      "master", "devel",
+#      "citest",
+#      "citest-autotools",
+      "citest-autotools-freebsd" ]
+    tags:
+      - '**'
+  pull_request:
+    branches: [ "master", "devel" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: Start FreeBSD VM
+      id: freebsdvm
+      uses: vmactions/freebsd-vm@v1
+      with:
+        usesh: true
+        sync: nfs
+        prepare: |
+          pkg update
+          pkg install -y check autoconf automake libtool
+        run: |
+          pwd
+          ls -lah
+          whoami
+          env
+          freebsd-version
+          sysctl hw.model
+          sysctl hw.ncpu
+          sysctl hw.physmem
+          sysctl hw.usermem
+#    - name: install prereq.
+#      shell: freebsd {0}
+#      run: sudo pkg update ; sudo pkg install -y check
+    - name: debug env
+      shell: freebsd {0}
+      run: |
+        cd $GITHUB_WORKSPACE; pwd; ls -la
+    - name: autogen
+      shell: freebsd {0}
+      run: |
+        cd $GITHUB_WORKSPACE; ./autogen.sh
+    - name: configure
+      shell: freebsd {0}
+      run: |
+        cd $GITHUB_WORKSPACE; ./configure
+    - name: make
+      shell: freebsd {0}
+      run: |
+        cd $GITHUB_WORKSPACE; make
+    - name: make check
+      shell: freebsd {0}
+      run: |
+        cd $GITHUB_WORKSPACE; make check
+    - name: make distcheck
+      shell: freebsd {0}
+      run: |
+        cd $GITHUB_WORKSPACE; make distcheck
+    - name: make install
+      shell: freebsd {0}
+      run: |
+        cd $GITHUB_WORKSPACE; sudo make install
+    - name: check installation
+      shell: freebsd {0}
+      run: |
+        cd $GITHUB_WORKSPACE; find /usr/local -iname '*adf*'
+    - name: update ldconfig
+      shell: freebsd {0}
+      run: |
+        cd $GITHUB_WORKSPACE; sudo ldconfig
+    - name: test installed command-line utils
+      shell: freebsd {0}
+      run: |
+        cd $GITHUB_WORKSPACE; ./tests/examples/test_all_examples.sh /usr/local/bin
+    - name: test installed command-line utils (2)
+      shell: freebsd {0}
+      run: |
+        cd $GITHUB_WORKSPACE; cat tests/config.sh.in_cmake | \
+          sed -e 's@\${PROJECT_BINARY_DIR}@'"$GITHUB_WORKSPACE"'@' \
+              -e 's@\${PROJECT_SOURCE_DIR}@'"$GITHUB_WORKSPACE"'@' \
+          > tests/config.sh
+        cd $GITHUB_WORKSPACE; cat tests/config.sh
+        ./tests/examples2/run_all_tests.sh /usr/local/bin
+    - name: store logs from failed tests
+      if: failure()
+      uses: actions/upload-artifact@v4
+      with:
+        name: freebsd_autotools_logs_failed_tests
+        path: |
+          configure
+          tests/*.log
+          tests/examples/*.log
+          tests/examples2/*.log
+          tests/regr/*.log
+          tests/unit/*.log

@@ -27,19 +27,19 @@ jobs:
       run: util/cmake_shared_configure
     - name: cmake_shared_build
       shell: bash
-      run: util/cmake_shared_build
+      run: util/cmake_shared_build --config Release
     - name: copy binaries to orig. dirs
       shell: bash
       run: |
-        cp -v build/shared/tests/regr/Debug/*.exe build/shared/tests/regr/
-        cp -v build/shared/tests/unit/Debug/*.exe build/shared/tests/unit/
-        cp -v build/shared/examples/Debug/*.exe build/shared/examples/
+        cp -v build/shared/tests/regr/Release/*.exe build/shared/tests/regr/
+        cp -v build/shared/tests/unit/Release/*.exe build/shared/tests/unit/
+        cp -v build/shared/examples/Release/*.exe build/shared/examples/
     - name: copy dll to dirs with test exe
       shell: bash
       run: |
-        cp -v build/shared/src/Debug/*.dll build/shared/tests/regr/
-        cp -v build/shared/src/Debug/*.dll build/shared/tests/unit/
-        cp -v build/shared/src/Debug/*.dll build/shared/examples/
+        cp -v build/shared/src/Release/*.dll build/shared/tests/regr/
+        cp -v build/shared/src/Release/*.dll build/shared/tests/unit/
+        cp -v build/shared/src/Release/*.dll build/shared/examples/
     - name: cmake_shared_test
       shell: bash
       run: util/cmake_shared_test
@@ -55,8 +55,8 @@ jobs:
       shell: bash
       run: |
         mkdir -p artifacts/bin
-        cp -v build/shared/src/Debug/*.dll \
-              build/shared/examples/Debug/*.exe \
+        cp -v build/shared/src/Release/adf* \
+              build/shared/examples/Release/*.exe \
               artifacts/bin
         mkdir artifacts/include
         cp -vR src/*.h artifacts/include

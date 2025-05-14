@@ -1,0 +1,116 @@
+name: cmake-cross-mingw
+
+on:
+  push:
+    branches: [
+    "master",
+    "devel",
+    "citest",
+    "citest-cmake",
+    "citest-cmake-cross-mingw" ]
+    tags:
+      - '**'
+  pull_request:
+    branches: [ "master", "devel" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+#        build_type: [ x86_64, i686 ]
+        build_type: [ x86_64 ]
+    steps:
+    - uses: actions/checkout@v4
+    - name: install prereq.
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y check gcc-mingw-w64-x86-64-win32
+    - name: cmake_shared_configure
+      run: |
+        CC=${{ matrix.build_type }}-w64-mingw32-gcc \
+        util/cmake_shared_configure \
+        -DADFLIB_ENABLE_TESTS=OFF
+    - name: cmake_shared_build
+      run: util/cmake_shared_build
+#    - name: cmake_shared_test
+#      run: util/cmake_shared_test
+#    - name: cmake_shared_install
+#      run: sudo bash util/cmake_shared_install
+#    - name: check installation
+#      run: find /usr/local -iname '*adf*'
+#    - name: update ldconfig
+#      run: sudo ldconfig
+#    - name: test command-line utils
+#      run: ./tests/examples/test_all_examples.sh /usr/local/bin
+    - name: check build output files
+      run: find build/
+    - name: prepare artifact
+      run: |
+        mkdir -vp bin
+        cp -v build/shared/src/libadf* bin/
+        cp -v build/shared/examples/*.exe bin/
+        mkdir -v include
+        cp -vR src/*.h include
+    - uses: actions/upload-artifact@v4
+      with:
+#        name: adflib-${{ env.ADFLIB_TAG }}-mingw
+        name: adflib-mingw-${{ matrix.build_type }}
+        path: |
+          AUTHORS
+          BUGS.md
+          ChangeLog
+          COPYING*
+          NOTES.md
+          README.md
+          TODO
+          bin
+          doc
+          include
+
+  test:
+    needs: build
+    runs-on: windows-latest
+    strategy:
+      matrix:
+#        build_type: [ x86_64, i686 ]
+        build_type: [ x86_64 ]
+    steps:
+    - uses: actions/checkout@v4
+    - uses: actions/download-artifact@v4
+      with:
+#      name: adflib-${{ env.ADFLIB_TAG }}-mingw
+        name: adflib-mingw-${{ matrix.build_type }}
+        path: .
+    - name: list files extracted from the artifact
+      shell: bash
+      run: |
+        find bin/
+        find include/
+    - name: show properties of binaries
+      shell: bash
+      run: ldd bin/unadf
+    - name: configure tests
+      shell: bash
+      run: |
+        cat tests/config.sh.in_cmake | \
+          sed -e 's@\${PROJECT_BINARY_DIR}@./bin/@' \
+              -e 's@\${PROJECT_SOURCE_DIR}@./@' \
+          > tests/config.sh
+        cat tests/config.sh
+    - name: test command-line utils
+      shell: bash
+      run: |
+        tests/examples/test_examples_basic.sh bin/
+        tests/examples/test_all_examples.sh bin/
+    - name: test installed command-line utils (2)
+      shell: bash
+      run: |
+        ./tests/examples2/run_all_tests.sh bin
+    - name: store logs from failed tests
+      if: failure()
+      uses: actions/upload-artifact@v4
+      with:
+        name: cmake_cross_mingw_${{ matrix.build_type }}_logs_failed_tests
+        path: |
+          cmake/shared/Testing/

@@ -47,29 +47,26 @@ jobs:
       run: find build/
     - name: prepare artifact
       run: |
-        mkdir -vp artifacts/bin
-        cp -v build/shared/src/libadf* artifacts/bin/
-        cp -v build/shared/examples/*.exe artifacts/bin/
-        mkdir -v artifacts/include
-        cp -vR src/*.h artifacts/include
-        cp -vR BUGS.md \
-               NOTES.md \
-               README.md \
-               COPYING* \
-               AUTHORS \
-               ChangeLog \
-               TODO \
-               doc \
-               artifacts/
-        cd artifacts ; \
-        tar cvzf ../adflib-mingw-${{ matrix.build_type }}.tgz *
-        cd ..
+        mkdir -vp bin
+        cp -v build/shared/src/libadf* bin/
+        cp -v build/shared/examples/*.exe bin/
+        mkdir -v include
+        cp -vR src/*.h include
     - uses: actions/upload-artifact@v4
       with:
 #        name: adflib-${{ env.ADFLIB_TAG }}-mingw
         name: adflib-mingw-${{ matrix.build_type }}
         path: |
-          adflib-mingw-${{ matrix.build_type }}.tgz
+          AUTHORS
+          BUGS.md
+          ChangeLog
+          COPYING*
+          NOTES.md
+          README.md
+          TODO
+          bin
+          doc
+          include
 
   test:
     needs: build
@@ -85,12 +82,12 @@ jobs:
 #      name: adflib-${{ env.ADFLIB_TAG }}-mingw
         name: adflib-mingw-${{ matrix.build_type }}
         path: .
-    - name: extract file from the artifact
-      run: tar xzvf adflib-mingw-${{ matrix.build_type }}.tgz
     - name: list files extracted from the artifact
       shell: bash
-      run: find bin/
-    - name: show properties of binaries (installed)
+      run: |
+        find bin/
+        find include/
+    - name: show properties of binaries
       shell: bash
       run: ldd bin/unadf
     - name: configure tests

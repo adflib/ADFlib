@@ -2,7 +2,7 @@ adflib (0.10.2-1) unstable; urgency=medium
 
   * unadf: fix extracting tree for read-only directories.
 
- -- Tomasz Wolak <tomas.wolak@gmail.com>  Fri, 09 May 2025 19:40:39 +0100
+ -- Tomasz Wolak <tomas.wolak@gmail.com>  Wed, 16 May 2025 16:15:10 +0100
 
 
 adflib (0.10.1-1) unstable; urgency=medium

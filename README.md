@@ -313,8 +313,8 @@ see below!), but still, writing is still a relatively new and potentially harmul
 feature so **do not experiment on a unique copy of an ADF image with your
 precious data**. Do it on a copy (and report any issues if encountered).
 
-If you use the ADFlib for writing data, see BUGS file for information about
-the issues found. It is very strongly advised to **USE TO THE LATEST VERSION**,
+If you use the ADFlib for writing data, see the BUGS file for information about
+the issues found. It is very strongly advised to **UPDATE TO THE LATEST VERSION**,
 where any issues found are fixed.
 
 (See also TODO and BUGS).

@@ -19,7 +19,7 @@ AM_INIT_AUTOMAKE([1.9 tar-ustar])
 AM_SILENT_RULES([yes])
 
 AC_ARG_ENABLE([examples],
-              [  --enable-examples    Build exmples],
+              [  --enable-examples    Build examples],
               [case "${enableval}" in
                 yes) examples=true ;;
                 no)  examples=false ;;

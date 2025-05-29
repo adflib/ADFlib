@@ -445,6 +445,7 @@ and such, very likely release branch(es) will also appear).
 ## Related projects
 
 ### Projects using ADFlib
+- [`ADFinder` and `send2ADF`](https://ginnov.github.io/littlethings/) ([GitHub]](https://github.com/GINNOV/littlethings/tree/master/Amiga/Tools)) - Amiga ADF tools for MacOS
 - [adfExplorer](https://pepijn-devries.github.io/adfExplorer/) ([GitHub](https://github.com/pepijn-devries/adfExplorer)) - package providing access to ADFs in R
 - [DiskFlashBack](https://robsmithdev.co.uk/diskflashback) ([GitHub](https://github.com/RobSmithDev/DiskFlashback)) - Windows app for viewing and editing misc. disk formats (ADFs are among them).
 - [`fuseadf`](https://gitlab.com/t-m/fuseadf) - FUSE-based filesystem allowing

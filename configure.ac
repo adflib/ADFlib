@@ -13,6 +13,7 @@ AC_INIT([adflib],[adflib_version])
 AC_CONFIG_SRCDIR([src/adf_env.c])
 AC_CONFIG_HEADERS([config.h])
 AC_CONFIG_MACRO_DIRS([m4])
+AC_CONFIG_AUX_DIR([config])
 
 #AM_INIT_AUTOMAKE([1.9 tar-pax])  # https://noiselabs.io/tar-file-name-is-too-long-max-99/
 AM_INIT_AUTOMAKE([1.9 tar-ustar])

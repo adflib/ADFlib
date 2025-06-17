@@ -1,7 +1,7 @@
 /*
- * adf_dev_drivers.h
+ *  adf_device_drivers.h - device drivers management
  *
- * $ID$
+ *  Copyright (C) 2024-2025 Tomasz Wolak
  *
  *  This file is part of ADFLib.
  *

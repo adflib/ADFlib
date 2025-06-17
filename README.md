@@ -467,7 +467,7 @@ in Python.
 
 ### Other
 - [adflib in Rust](https://github.com/vschwaberow/adflib)
-- [affs Linux kernel module](https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/tree/Documentation/filesystems/affs.rst)
+- [affs Linux kernel module](https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/tree/Documentation/filesystems/affs.rst)([doc](https://docs.kernel.org/filesystems/affs.html))
 - [amitools](https://amitools.readthedocs.io/) - a set of useful tools in Python
 - [DiskSalv](https://www.nightvzn.net/portfolio/web/amiga_monitor/archives/1_5html/disksalv.htm) ([AmiNet](https://aminet.net/package/disk/salv/DiskSalv))- DiskSalv for AmigaOS
 

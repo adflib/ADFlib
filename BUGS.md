@@ -6,7 +6,11 @@
 ## Write support
 Recent issues:
 
-- Versions 0.9.0 and earlier - bug on file appending on OFS (not updated data
+- unadf on Windows, versions 0.10.2 and earlier
+  Bug in file extraction (extracted binary data might have been corrupted).
+
+- Versions 0.9.0 and earlier
+  Bug on file appending on OFS (not updated data
   size in OFS data block header if written data chunk is bigger than space
   remaining in the block)
   - not the most common case and it does not cause any harm on reading/writing

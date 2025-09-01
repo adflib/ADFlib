@@ -6,22 +6,22 @@ Source: https://github.com/adflib/ADFlib
 Files: *
 Copyright: 1999-2024 Laurent Clévy (laurent.clevy@club-internet.fr)
            2019-2024 Stuart Caie (kyzer@cabextract.org.uk)
-           2022-2024 Tomasz Wolak (tomas.wolak@gmail.com)
+           2022-2025 Tomasz Wolak (tomas.wolak@gmail.com)
 License: GPL-2.0+
 
 Files: src/*
 Copyright: 1999-2024 Laurent Clévy (laurent.clevy@club-internet.fr)
            2019-2024 Stuart Caie (kyzer@cabextract.org.uk)
-           2022-2024 Tomasz Wolak (tomas.wolak@gmail.com)
+           2022-2025 Tomasz Wolak (tomas.wolak@gmail.com)
 License: LGPL-2.1+ or GPL-2.0+
 
 Files: src/win32/*
 Copyright: 1999-2024 Dan Sutherland (dan@chromerhino.demon.co.uk)
-           2023-2024 Tomasz Wolak (tomas.wolak@gmail.com)
+           2023-2025 Tomasz Wolak (tomas.wolak@gmail.com)
 License: LGPL-2.1+ or GPL-2.0+
 
 Files: packaging/debian/* examples/*
-Copyright: 2022-2024 Tomasz Wolak (tomas.wolak@gmail.com)
+Copyright: 2022-2025 Tomasz Wolak (tomas.wolak@gmail.com)
 License: GPL-2.0+
 
 Files: examples/unadf*

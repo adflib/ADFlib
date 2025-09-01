@@ -62,14 +62,13 @@ To do and/or consider (no particular order):
   created with the ADFlib) with dircache enabled were encountered (only
   testffs.adf, one of the test images in ADFlib...). So, seemingly no real need
   for testing this - but it should be done at some point.
-  Note also that dircache is most likely used on larger devices (hard disk
-  volumes), while majority of disk dumps are floppies (occasionally HDFs).
 
 * Review and update the API
 
   Make consistent prefixing in all modules/subsystems, to separate namespace
   of the ADFlib and (in the second part) of a (sub)module.
+  
+  (mostly done, leaving this here as a remainder in case of any remnants...)
 
-
-* Update documentation
+* Update API documentation
   ...

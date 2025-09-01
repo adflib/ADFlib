@@ -1,3 +1,7 @@
+01SEP2025
+ADFlib 0.10.3
+- unadf on Windows: fix extracting binary files, #96
+
 16MAY2025
 ADFlib 0.10.2
 - unadf: fix extracting tree for read-only directories, #91

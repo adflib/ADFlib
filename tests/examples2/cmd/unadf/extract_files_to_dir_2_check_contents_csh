@@ -1,8 +1,8 @@
 cmd(){
     # check contents of extracted binary file
 
-    cmp tmp/${testName}/extract_files_to_dir/csh \
-	${testDataDir}/Files/arccsh_adf/CSH
+    cmp --verbose tmp/${testName}/extract_files_to_dir/csh \
+        "${testDataDir}/Files/arccsh_adf/CSH"
 }
 
 comment(){

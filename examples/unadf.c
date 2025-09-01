@@ -63,7 +63,12 @@ int utimeWin32( const char * const            pathname,
 # include <sys/time.h>
 # include <unistd.h>
 # define DIRSEP '/'
-#endif
+
+# ifndef O_BINARY
+# define O_BINARY 0
+# endif
+
+#endif  // WIN32
 
 #define UNADF_VERSION       ADFLIB_VERSION
 #define EXTRACT_BUFFER_SIZE 8192
@@ -492,7 +497,7 @@ void extract_file(struct AdfVolume *vol, char *filename, char *out, mode_t perms
     }
     else {
         printf("x - %s\n", out);
-        fd = open(out, O_CREAT | O_WRONLY | O_TRUNC, perms);
+        fd = open(out, O_CREAT | O_WRONLY | O_TRUNC | O_BINARY, perms);
         if (fd < 0) {
             print_error(out);
             goto error_handler;

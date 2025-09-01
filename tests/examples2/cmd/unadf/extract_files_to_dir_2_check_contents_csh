@@ -1,0 +1,10 @@
+cmd(){
+    # check contents of extracted binary file
+
+    cmp tmp/${testName}/extract_files_to_dir/csh \
+	${testDataDir}/Files/arccsh_adf/CSH
+}
+
+comment(){
+    echo "check check contents of extracted csh (a binary file)"
+}

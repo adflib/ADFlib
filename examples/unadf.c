@@ -74,10 +74,15 @@ int utimeWin32( const char * const            pathname,
 #define EXTRACT_BUFFER_SIZE 8192
 
 /* command-line arguments */
-bool list_mode = false, list_all = false, use_dircache = false,
-     show_sectors = false, show_comments = false, pipe_mode = false,
-     win32_mangle = false;
-char *adf_file = NULL, *extract_dir = NULL;
+bool list_mode     = false,
+     list_all      = false,
+     use_dircache  = false,
+     show_sectors  = false,
+     show_comments = false,
+     pipe_mode     = false,
+     win32_mangle  = false;
+char *adf_file    = NULL,
+     *extract_dir = NULL;
 int vol_number = 0;
 struct AdfList *file_list = NULL;
 
@@ -864,7 +869,7 @@ void adfPrintBacktrace(void)
 
     int size = backtrace( buffer, (int) BUFSIZE );
     const char * const * const strings =
-        ( const char * const* const ) backtrace_symbols( buffer, size );
+        (const char * const * const) backtrace_symbols( buffer, size );
 
     if ( strings == NULL ) {
         perror( "error getting symbols" );
@@ -872,7 +877,7 @@ void adfPrintBacktrace(void)
     }
 
     fprintf( stderr, "Obtained %d stack frames.\n", size );
-    for ( int i = 0 ; i < size ; i++ )
+    for ( int i = 0; i < size; i++ )
         fprintf( stderr, "%s\n", strings[i] );
 
     free( (void *) strings );

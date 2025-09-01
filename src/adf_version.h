@@ -32,7 +32,7 @@
 //#ifdef PACKAGE_VERSION
 //#define ADFLIB_VERSION PACKAGE_VERSION
 //#endif
-#define ADFLIB_VERSION "0.10.2"
-#define ADFLIB_DATE "2025-05-16"
+#define ADFLIB_VERSION "0.10.3"
+#define ADFLIB_DATE "2025-09-01"
 
 #endif /* ADF_VERSION_H */

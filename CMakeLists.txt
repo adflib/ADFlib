@@ -2,8 +2,8 @@
 cmake_minimum_required ( VERSION 3.11 )
 
 # version details - use utils/bump-version to update it
-set ( ADFLIB_VERSION 0.10.2 )
-set ( ADFLIB_DATE 2025-05-16 )
+set ( ADFLIB_VERSION 0.10.3 )
+set ( ADFLIB_DATE 2025-09-01 )
 
 project ( adflib
     VERSION      ${ADFLIB_VERSION}

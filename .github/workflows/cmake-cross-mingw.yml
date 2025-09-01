@@ -77,6 +77,10 @@ jobs:
         build_type: [ x86_64 ]
     steps:
     - uses: actions/checkout@v4
+    - name: install prereq.
+      run: |
+        choco install diffutils
+        cmp --version
     - uses: actions/download-artifact@v4
       with:
 #      name: adflib-${{ env.ADFLIB_TAG }}-mingw

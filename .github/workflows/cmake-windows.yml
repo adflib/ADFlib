@@ -106,8 +106,9 @@ jobs:
         path: .
     - name: install prereq.
       run: |
-        choco install gzip
+        choco install gzip diffutils
         gzip --version
+        cmp --version
     - name: list files extracted from the artifact
       shell: bash
       run: find .

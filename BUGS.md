@@ -2,12 +2,14 @@
 ## Possible bugs
 - in dircache updates
 
-
-## Write support
-Recent issues:
+## unadf
 
 - unadf on Windows, versions 0.10.2 and earlier
-  Bug in file extraction (extracted binary data might have been corrupted).
+  Bug in file extraction (extracted binary data might be corrupted).
+
+## Write support
+
+Recent issues:
 
 - Versions 0.9.0 and earlier
   Bug on file appending on OFS (not updated data

@@ -498,7 +498,16 @@ void extract_file(struct AdfVolume *vol, char *filename, char *out, mode_t perms
 
     /* open local file for writing */
     if (pipe_mode) {
-        fd = 1; /* stdout */
+#ifdef _WIN32
+        fd = _fileno( stdout );
+        const int result = _setmode( fd, _O_BINARY );
+        if ( result == -1 ) {
+            perror( "Cannot set binary mode" );
+            goto error_handler;
+        }
+#else
+        fd = fileno( stdout );
+#endif
     }
     else {
         printf("x - %s\n", out);

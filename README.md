@@ -75,6 +75,10 @@ Considering these 3 levels, the library supports:
 
 Library initialization and setup:
 ```C
+#include <adflib.h>
+
+int main( void )
+{
     // library initialization
     adfLibInit();
 
@@ -92,6 +96,7 @@ Library initialization and setup:
 
 library_cleanup:
     adfLibCleanUp();
+}
 ```
 
 Accessing a dump device:
@@ -309,7 +314,7 @@ Main points:
 
 ### Write support
 The file read and write support are relatively well tested (except dir. cache,
-see below!), but still, writing is still a relatively new and potentially harmul
+see below!), but still, writing is a relatively new and potentially harmul
 feature so **do not experiment on a unique copy of an ADF image with your
 precious data**. Do it on a copy (and report any issues if encountered).
 

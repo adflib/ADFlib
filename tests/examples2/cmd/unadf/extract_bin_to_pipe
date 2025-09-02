@@ -1,0 +1,7 @@
+cmd(){
+    $unadf -p "${dumpFile}" CSH
+}
+
+comment(){
+    echo "-p (extract to pipe) a binary file"
+}

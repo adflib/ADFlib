@@ -432,6 +432,13 @@ ADF_SECTNUM adfCreateEntry( struct AdfVolume * const      vol,
                             const char * const            name,
                             const ADF_SECTNUM             thisSect )
 {
+    const unsigned len = (unsigned) strlen( name );
+    if ( len > ADF_MAX_NAME_LEN ) {
+        adfEnv.eFct( "%s: name '%s' is too long (%u > max. %d characters).",
+                     __func__, name, len, ADF_MAX_NAME_LEN );
+        return -1;
+    }
+
     ADF_RETCODE  rc;
     ADF_SECTNUM  newSect;
     char  name2[ ADF_MAX_NAME_LEN + 1 ],
@@ -441,8 +448,7 @@ ADF_SECTNUM adfCreateEntry( struct AdfVolume * const      vol,
 
     bool intl = adfVolHasINTL( vol ) ||
                 adfVolHasDIRCACHE( vol );
-    unsigned len = min( (unsigned) strlen(name),
-                        (unsigned) ADF_MAX_NAME_LEN );
+
     adfStrToUpper( (uint8_t *) name2,
                    (uint8_t *) name, len, intl );
     unsigned hashValue = adfGetHashValue( (uint8_t *) name, intl );
@@ -634,6 +640,13 @@ ADF_RETCODE adfRenameEntry( struct AdfVolume * const  vol,
                             const ADF_SECTNUM         nPSect,
                             const char * const        newName )
 {
+    const unsigned len = (unsigned) strlen( newName );
+    if ( len > ADF_MAX_NAME_LEN ) {
+        adfEnv.eFct( "%s: name '%s' is too long (%u > max. %d characters).",
+                     __func__, newName, len, ADF_MAX_NAME_LEN );
+        return ADF_RC_NAME_TOO_LONG;
+    }
+
     struct AdfEntryBlock parent, previous, entry, nParent;
     char name2[ ADF_MAX_NAME_LEN + 1 ],
          name3[ ADF_MAX_NAME_LEN + 1 ];
@@ -646,7 +659,6 @@ ADF_RETCODE adfRenameEntry( struct AdfVolume * const  vol,
 
     bool intl = adfVolHasINTL( vol ) ||
                 adfVolHasDIRCACHE( vol );
-    unsigned len = (unsigned) strlen ( newName );
     adfStrToUpper( (uint8_t *) name2, (uint8_t*) newName, len, intl );
     adfStrToUpper( (uint8_t *) name3, (uint8_t*) oldName, (unsigned) strlen(oldName), intl );
     /* newName == oldName ? */
@@ -666,7 +678,7 @@ ADF_RETCODE adfRenameEntry( struct AdfVolume * const  vol,
     }
 
     /* change name and parent dir */
-    entry.nameLen = (uint8_t) min ( 31u, strlen( newName ) );
+    entry.nameLen = (uint8_t) min( 31u, len );
     memcpy( entry.name, newName, entry.nameLen );
     entry.parent = nPSect;
     const ADF_SECTNUM tmpSect = entry.nextSameHash;
@@ -1111,14 +1123,19 @@ ADF_SECTNUM adfNameToEntryBlk( struct AdfVolume * const      vol,
                                struct AdfEntryBlock * const  entry,
                                ADF_SECTNUM * const           nUpdSect )
 {
+    const unsigned nameLen = (unsigned) strlen( name );
+    if ( nameLen > ADF_MAX_NAME_LEN ) {
+        adfEnv.eFct( "%s: name '%s' is too long (%u > max. %d characters).",
+                     __func__, name, nameLen, ADF_MAX_NAME_LEN );
+        return -1;
+    }
+
     uint8_t upperName[ ADF_MAX_NAME_LEN + 1 ];
     uint8_t upperName2[ ADF_MAX_NAME_LEN + 1 ];
 
     bool intl = adfVolHasINTL( vol ) ||
                 adfVolHasDIRCACHE( vol );
     unsigned hashVal = adfGetHashValue( (uint8_t *) name, intl );
-    unsigned nameLen = min( (unsigned) strlen ( name ),
-                            (unsigned) ADF_MAX_NAME_LEN );
     adfStrToUpper( upperName, (uint8_t *) name, nameLen, intl );
 
     ADF_SECTNUM nSect = ht[ hashVal ];

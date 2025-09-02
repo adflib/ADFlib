@@ -37,6 +37,7 @@ typedef enum {
 
     ADF_RC_FOPEN           = 1 << 10,
     ADF_RC_NULLPTR         = 1 << 12,
+    ADF_RC_NAME_TOO_LONG   = 1 << 13,
 
 /* adfRead*Block() */
 

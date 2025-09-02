@@ -2,7 +2,7 @@ adflib (0.10.3-1) unstable; urgency=medium
 
   * unadf on Windows: fix extracting binary files.
 
- -- Tomasz Wolak <tomas.wolak@gmail.com>  Wed, 1 Sep 2025 21:04:28 +0100
+ -- Tomasz Wolak <tomas.wolak@gmail.com>  Mon, 1 Sep 2025 21:04:28 +0100
 
 
 adflib (0.10.2-1) unstable; urgency=medium

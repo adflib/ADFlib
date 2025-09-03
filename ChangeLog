@@ -1,3 +1,13 @@
+03SEP2025
+ADFlib 0.10.4
+- unadf on Windows: fix extracting binary files with -p (pipe), #96
+- make all operations on too long filenames fail (instead of truncating
+  the name), #97
+- dump device: fail opening if write not possible (instead of silently
+  opening read-only), #98
+- command-line tools: add showing build and runtime versions of the lib.
+- added and updated tests (ie. for the bug and the changes mentioned above).
+
 01SEP2025
 ADFlib 0.10.3
 - unadf on Windows: fix extracting binary files, #96

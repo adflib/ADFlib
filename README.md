@@ -333,11 +333,11 @@ without them (with the `generic` (dummy) native device instead, see
 INSTALL for details).
 
 Enabling and using native devices remember that **a native device can be
-any physical storage device on your system(!)** - so _know (and be certain)
-what you are doing_ (eg. do not open your `C:\` on Windows or `/dev/sda`
-on Linux and call a function for creating an Amiga filesystem on it...
-unless you _really_ want to reinstall your system and restore your data
-from a backup...).
+any physical storage device on your system(!)** - so **know (and be certain)
+what you are doing** (!!!). For instance, do not open your `C:\` (`|H0`)
+on Windows or `/dev/sda` on Linux and call a function for creating an Amiga
+filesystem on it... unless you _really_ want to reinstall your system and
+restore your data from a backup...).
 
 Since native devices are not much tested - consider them as
 testing/experimental and treat as such (ie. use in a safe environment,
@@ -418,9 +418,9 @@ Native devices are distinguished from regular dump files by special naming
 convensions, which, depending on the operating system, are as follows:
 - on Linux - any file specified as `/dev/....` (so any Linux device file) is
 opened as a native device
-- on Windows - device name specified as "|Hx", where '`x`' is the numerical id
+- on Windows - device name specified as `|Hx`, where '`x`' is the numerical id
 of the physical disk (equivalent of Windows pathname: `\\.\PhysicalDiskX`).
-is opened as a native device. Note that "|" is a special character for system
+is opened as a native device. Note that "`|`" is a special character for system
 pipe (sending data to another process), so the device name must be given within
 "" (double quotes).
 

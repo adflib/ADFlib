@@ -450,20 +450,21 @@ and such, very likely release branch(es) will also appear).
 ## Related projects
 
 ### Projects using ADFlib
-- [adfExplorer](https://pepijn-devries.github.io/adfExplorer/) ([GitHub](https://github.com/pepijn-devries/adfExplorer)) - package providing access to ADFs in R
-- [`ADFinder` and `send2ADF`](https://ginnov.github.io/littlethings/) ([GitHub](https://github.com/GINNOV/littlethings/tree/master/Amiga/Tools)) - ADF tools for MacOS
-- [DiskFlashBack](https://robsmithdev.co.uk/diskflashback) ([GitHub](https://github.com/RobSmithDev/DiskFlashback)) - Windows app for viewing and editing misc. disk formats (ADFs are among them).
-- [`fuseadf`](https://gitlab.com/t-m/fuseadf) - FUSE-based filesystem allowing
-to mount and access ADF images in read/write mode.
-- [`patool`](https://pypi.org/project/patool/) - an archive file manager written
+- [adfExplorer](https://pepijn-devries.github.io/adfExplorer/) ([GitHub](https://github.com/pepijn-devries/adfExplorer)) - package providing access to ADFs in R.
+- [`ADF.inder` and `send2ADF`](https://ginnov.github.io/littlethings/) ([GitHub](https://github.com/GINNOV/littlethings/tree/master/Amiga/Tools)) - ADF tools for MacOS.
+- [DiskFlashBack](https://robsmithdev.co.uk/diskflashback) ([GitHub](https://github.com/RobSmithDev/DiskFlashback)) - Windows application for viewing and editing misc. disk formats (ADFs are among them).
+- [`fuseadf`](https://gitlab.com/t-m/fuseadf) -
+  [FUSE](https://en.wikipedia.org/wiki/Filesystem_in_Userspace)-based filesystem
+  allowing to mount and access ADF images in read/write mode.
+- [`patool`](https://pypi.org/project/patool/) - archive file manager written
 in Python.
 
 #### Older projects (not sure if maintained)
-- [AmigaDX](https://github.com/pbakota/amigadx) - plugin for Total Commander for reading/writing Amiga disk dump files
-- [AdfView](https://www.viksoe.dk/code/adfview.htm) - Windows shell extension
+- [AmigaDX](https://github.com/pbakota/amigadx) - plugin for Total Commander for reading/writing Amiga disk dump files.
+- [AdfView](https://www.viksoe.dk/code/adfview.htm) - Windows shell extension.
 - [AdfOpus](https://adfopus.sourceforge.net/) - Windows file management tool for ADF files.
 - [CopyToAdf](https://www.pouet.net/prod_nfo.php?which=65625&font=4) - part of WinUAE Demo Toolchain 5
-- [pyadf](https://sourceforge.net/projects/pyadf/) - Python bindings (for older versions)
+- [pyadf](https://sourceforge.net/projects/pyadf/) - Python bindings (for older versions).
   - note that this is neither
     [scripting framework for multiscale quantum chemistry](https://onlinelibrary.wiley.com/doi/full/10.1002/jcc.21810)
 	([on GitHub](https://github.com/chjacob-tubs/pyadf-releases))
@@ -474,7 +475,7 @@ in Python.
 - [adflib in Rust](https://github.com/vschwaberow/adflib)
 - [affs Linux kernel module](https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/tree/Documentation/filesystems/affs.rst)([doc](https://docs.kernel.org/filesystems/affs.html))
 - [amitools](https://amitools.readthedocs.io/) - a set of useful tools in Python
-- [DiskSalv](https://www.nightvzn.net/portfolio/web/amiga_monitor/archives/1_5html/disksalv.htm) ([AmiNet](https://aminet.net/package/disk/salv/DiskSalv))- DiskSalv for AmigaOS
+- [DiskSalv](https://www.nightvzn.net/portfolio/web/amiga_monitor/archives/1_5html/disksalv.htm) ([AmiNet](https://aminet.net/package/disk/salv/DiskSalv)) - disk utility program for AmigaOS
 
 ### ADF in AmiNet
 - [All](https://aminet.net/search?type=advanced&name=adf)

@@ -67,7 +67,7 @@ int main(int argc, char *argv[])
     log_info("\n");
 
     /* create and mount one device */
-    hd = adfDevCreate( "dump", "fl_test-newdev", 80, 2, 11 );
+    hd = adfDevCreate( "dump", argv[ 2 ], 80, 2, 11 );
     if ( ! hd ) {
         log_error( "can't create device\n" );
         status = 1;
@@ -86,7 +86,7 @@ int main(int argc, char *argv[])
         goto cleanup_dev;
     }
 
-    FILE * const boot = fopen( argv[2], "rb" );
+    FILE * const boot = fopen( argv[ 3 ], "rb" );
     if ( ! boot ) {
         log_error( "can't open bootblock file\n" );
         status = 1;

@@ -6,6 +6,7 @@
 set -e
 
 #echo "----- dir_test"
-cat $FFSDUMP >testffs_adf
-./dir_test $FFSDUMP
-rm -v testffs_adf
+test_file=dir_test_testffs_adf
+cat $FFSDUMP > ${test_file}
+./dir_test ${test_file}
+rm -v ${test_file}

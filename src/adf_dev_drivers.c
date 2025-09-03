@@ -34,10 +34,10 @@ struct AdfDeviceDriverListNode {
 static struct AdfDeviceDriverListNode * adfDeviceDrivers = NULL;
 
 
-ADF_RETCODE adfAddDeviceDriver ( const struct AdfDeviceDriver * const driver )
+ADF_RETCODE adfAddDeviceDriver( const struct AdfDeviceDriver * const driver )
 {
     struct AdfDeviceDriverListNode * newNode =
-        malloc ( sizeof ( struct AdfDeviceDriverListNode ) );
+        malloc( sizeof( struct AdfDeviceDriverListNode ) );
     if ( newNode == NULL )
         return ADF_RC_MALLOC;
 
@@ -48,7 +48,7 @@ ADF_RETCODE adfAddDeviceDriver ( const struct AdfDeviceDriver * const driver )
         adfDeviceDrivers = newNode;
     else {
         struct AdfDeviceDriverListNode * node = adfDeviceDrivers;
-        for ( ; node->next != NULL ; node = node->next );
+        for ( ; node->next != NULL; node = node->next );
         node->next = newNode;
     }
     
@@ -58,20 +58,20 @@ ADF_RETCODE adfAddDeviceDriver ( const struct AdfDeviceDriver * const driver )
 }
 
 
-ADF_RETCODE adfRemoveDeviceDriver ( const struct AdfDeviceDriver * const driver )
+ADF_RETCODE adfRemoveDeviceDriver( const struct AdfDeviceDriver * const driver )
 {
     struct AdfDeviceDriverListNode
         *node = adfDeviceDrivers,
         *prev = NULL;
 
-    for ( ; node != NULL ;  prev = node,  node = node->next )  {
+    for ( ; node != NULL;  prev = node,  node = node->next )  {
         if ( node->driver == driver ) {
             if ( prev == NULL ) {
                 adfDeviceDrivers = node->next;
             } else {
                 prev->next = node->next;
             }
-            free ( node );
+            free( node );
             return ADF_RC_OK;
         }
     }
@@ -80,41 +80,42 @@ ADF_RETCODE adfRemoveDeviceDriver ( const struct AdfDeviceDriver * const driver 
 }
 
 
-void adfRemoveDeviceDrivers ( void )
+void adfRemoveDeviceDrivers(void)
 {
     struct AdfDeviceDriverListNode
         *node = adfDeviceDrivers,
         *next = NULL;
 
-    for ( ; node != NULL ; node = next )  {
+    for ( ; node != NULL; node = next )  {
         //fprintf (stderr, "Removing driver %s\n", node->driver->name );
         //fflush(stderr);
         next = node->next;
-        free ( node );
+        free( node );
     }
+
     adfDeviceDrivers = NULL;
 }
 
 
-const struct AdfDeviceDriver * adfGetDeviceDriverByName ( const char * const name )
+const struct AdfDeviceDriver * adfGetDeviceDriverByName( const char * const name )
 {
-    for ( struct AdfDeviceDriverListNode * node = adfDeviceDrivers ;
-          node != NULL ; node = node->next )
-        if ( strcmp ( node->driver->name, name ) == 0 )
+    for ( struct AdfDeviceDriverListNode * node = adfDeviceDrivers;
+          node != NULL; node = node->next )
+        if ( strcmp( node->driver->name, name ) == 0 )
             return node->driver;
     return NULL;
 }
 
 
-const struct AdfDeviceDriver * adfGetDeviceDriverByDevName ( const char * const name )
+const struct AdfDeviceDriver * adfGetDeviceDriverByDevName( const char * const name )
 {
-    for ( struct AdfDeviceDriverListNode * node = adfDeviceDrivers ;
-          node != NULL ; node = node->next )
+    for ( struct AdfDeviceDriverListNode * node = adfDeviceDrivers;
+          node != NULL; node = node->next )
     {
         if ( node->driver->isDevice == NULL )
             continue;
 
-        if ( node->driver->isDevice ( name ) ) {
+        if ( node->driver->isDevice( name ) ) {
             //adfEnv.vFct( "%s: matched device %s for name %s",
             //             __func__, node->driver->name, name );
             return node->driver;
@@ -122,5 +123,5 @@ const struct AdfDeviceDriver * adfGetDeviceDriverByDevName ( const char * const 
     }
 
     /* if nothing matched -> default to dump file */
-    return adfGetDeviceDriverByName ( "dump" );
+    return adfGetDeviceDriverByName( "dump" );
 }

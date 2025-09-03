@@ -1,16 +1,25 @@
 
 ## General information
 
-There are 2 buildsystems that can be used - CMake and autotools (links below).
+There are 2 buildsystems that can be used - [CMake](https://cmake.org/) and
+[GNU Autotools](https://en.wikipedia.org/wiki/GNU_Autotools).
 Obviously, a requirement for building is installation of the chosen one.
 
-Testing require also the Check testing framework for C (link below).
+Testing requires also
+[the Check testing framework for C](https://libcheck.github.io/check/).
 
-Building deb packages require typical tools for that (ie. helper script uses
+Building deb packages requires typical tools for that (ie. helper script uses
 debuild from devscripts).
 
 
-## Building with CMake
+## Building
+
+The project was mostly compiled and tested with `gcc` (Linux, CygWin, Mingw),
+`clang` (MacOS) and `msvc` (Visual Studio on Windows), but other compilers
+might be also fine (as long as they are C99 compliant).
+
+
+### Building with CMake
 
 There are helper scripts in the `util/` directory, which should help doing quick
 builds. For instance, to build a release version (both static and binary lib.):
@@ -45,7 +54,7 @@ and build with or without the address sanitizer (normally used only for
 debugging/sanitizing memory problems): `ADFLIB_ENABLE_ADDRESS_SANITIZER`
 
 
-## Building with Autotools
+### Building with Autotools
 
 Standard way:
 ```
@@ -71,7 +80,7 @@ to experiment with it (with caution!), the driver must be enabled
 in the code.
 
 
-## Building with Visual Studio
+### Building with Visual Studio
 
 Existing CMake configuration should allow to build with VS. Just open
 the directory with the project (or possibly clone the repo with VS).
@@ -82,7 +91,7 @@ a static or a shared (DLL) library. All use MSVC compiler (but this can be
 changed easily in CMake settings, eg. to `clang` ).
 
 
-## Building Debian packages
+### Building Debian packages
 
 To build a `.deb` package for Debian (or any derivative), use the helper
 script:
@@ -120,7 +129,7 @@ Note that:
 
   (see also [a related Stack overflow post](https://stackoverflow.com/questions/66531482/application-crashes-when-using-address-sanitizer-with-msvc) )
 
-## Testing with CMake
+### Testing with CMake
 
 After successful building (see above), automatic tests can be started with:
 - `$ util/cmake_debug_test `  (to test debug version)
@@ -128,7 +137,7 @@ After successful building (see above), automatic tests can be started with:
 - `$ util/cmake_static_test`  (for the static library version)
 
 
-## Testing with Autotools
+### Testing with Autotools
 
 After successful building (see above), automatic tests can be build
 and started with:
@@ -136,7 +145,7 @@ and started with:
   $ make check
 ```
 
-## Testing with Visual Studio
+### Testing with Visual Studio
 
 "Run CTests".
 
@@ -155,7 +164,7 @@ Basic checks are done by the CI system for CMake and autotools on Linux
 (Debian and Ubuntu) and MacOS, so those _should_ work fine.
 
 
-## Installation with CMake
+### Installation with CMake
 
 (Note that this was not much used / tested!)
 
@@ -175,7 +184,7 @@ $ util/cmake_shared_install
 $ util/cmake_static_install
 ```
 
-## Installation with autotools
+### Installation with autotools
 
 To a configured location:
 ```
@@ -189,7 +198,7 @@ $ ./configure --help
 and look for prefix options.
 
 
-## Installation with Visual Studio
+### Installation with Visual Studio
 
 Find produced DLL and EXE and copy wherever you want...
 (btw. not sure what CMake install does on Windows...)
@@ -197,7 +206,7 @@ Find produced DLL and EXE and copy wherever you want...
 
 ## Cross-compilation examples
 
-1. With CMake:
+### With CMake:
 
 Building for Windows can be done cross-compiling eg. on Linux with MinGW:
 ```
@@ -227,7 +236,7 @@ require eg. configuring Windows CMake or tinkering test configuration to use
 Wine for execution etc...
 It should rather be tested and used on the native target system.
 
-2. With autotools:
+### With autotools:
 ```
   $ ./autogen.sh
   $ mkdir build
@@ -235,9 +244,3 @@ It should rather be tested and used on the native target system.
   $ ../configure --host=x86_64-w64-mingw32
   $ make
 ```
-
-Links
-------
-- [CMake](https://cmake.org/)
-- [GNU Autotools](https://en.wikipedia.org/wiki/GNU_Autotools) (and links there)
-- [Check testing framework](https://libcheck.github.io/check/)

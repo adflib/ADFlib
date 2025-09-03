@@ -72,3 +72,25 @@ To do and/or consider (no particular order):
 
 * Update API documentation
   ...
+
+* Move salvage/undelete code from the library to the tools (examples)
+
+  Why?
+  1. This kind of code is not at all a core part of the library. It is more
+     application/utility level functionality. This is more special (forensics)
+     utility than generic data access functionality (which is core purpose of
+     the library).
+  2. It is tricky to make it really complete - if it is possible at all...
+     There can be plenty of special cases and many changes may be required
+     on the way.
+  3. The above could enforce changing (unnecessarily) major version of
+     the library (as a sign of a modified API) what implies cascade changes
+     in dependencies of dependent software.
+
+  Why not?
+  1. It might be nice for client software to have such functionality (undelete)
+     ready to use.
+
+  All in all it seems to have little sense to keep it as a part of the library.
+  Moving it to examples (for use as part of adfsalvage) seems to be a better
+  solution.

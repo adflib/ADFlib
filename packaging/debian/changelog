@@ -1,3 +1,16 @@
+adflib (0.10.4-1) unstable; urgency=medium
+
+  * unadf on Windows: fix extracting binary files with -p (pipe).
+  * make all operations on too long filenames fail (instead of truncating
+    the name).
+  * dump device: fail opening if write not possible (instead of silently
+    opening read-only).
+  * command-line tools: add showing build and runtime versions of the lib.
+  * added and updated tests (ie. for the bug and the changes mentioned above).
+
+ -- Tomasz Wolak <tomas.wolak@gmail.com>  Wed, 3 Sep 2025 16:47:32 +0100
+
+
 adflib (0.10.3-1) unstable; urgency=medium
 
   * unadf on Windows: fix extracting binary files.

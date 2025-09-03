@@ -4,9 +4,9 @@
 AC_PREREQ([2.69])
 
 # version details - use utils/bump-version to update it
-m4_define([adflib_version],[0.10.3])
-m4_define([adflib_lt_version],[3:3:0])
-m4_define([adflib_date],[2025-09-01])
+m4_define([adflib_version],[0.10.4])
+m4_define([adflib_lt_version],[3:4:0])
+m4_define([adflib_date],[2025-09-03])
 
 AC_INIT([adflib],[adflib_version])
 

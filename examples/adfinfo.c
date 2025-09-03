@@ -55,7 +55,10 @@ void usage(void)
             "where:\n  adf_device - an adf file (image) or a native (real) device\n"
             "  vol        - (optional) partition/volume number\n"
             "  path       - (optional) a file/directory inside the ADF device\n\n"
-            "(using adflib version %s)\n", adfGetVersionNumber() );
+            "Version: %s, powered by ADFlib: build   v%s (%s)\n"
+            "                                    runtime v%s (%s)\n",
+            ADFLIB_VERSION, ADFLIB_VERSION, ADFLIB_DATE,
+            adfGetVersionNumber(), adfGetVersionDate() );
 }
 
 

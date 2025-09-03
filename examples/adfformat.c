@@ -92,7 +92,9 @@ int main( const int            argc,
     }
 
     if ( options.version ) {
-        printf( "\n%s (%s), powered by ADFlib %s (%s)\n\n",
+        printf( "%s, powered by ADFlib: build   v%s (%s)\n"
+                "                           runtime v%s (%s)\n",
+                ADFLIB_VERSION,
                 ADFLIB_VERSION, ADFLIB_DATE,
                 adfGetVersionNumber(), adfGetVersionDate() );
         exit( EXIT_SUCCESS );

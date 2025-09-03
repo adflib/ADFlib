@@ -2,9 +2,7 @@
 ## Possible bugs
 - in dircache updates
 
-## unadf
-
-- unadf on Windows, versions 0.10.2 and earlier
+## unadf on Windows, versions 0.10.3 and earlier
   Bug in file extraction (extracted binary data might be corrupted).
 
 ## Write support

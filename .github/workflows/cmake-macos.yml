@@ -36,11 +36,16 @@ jobs:
 #    - name: update ldconfig
 #      run: sudo ldconfig
     - name: prepare artifact
-      run:
-        tar czvf adflib-macos.tgz
-            /usr/local/bin/*adf*
-            /usr/local/include/adf/
-            /usr/local/lib/*adf*
+      run: |
+        mkdir -vp /usr/local/share/doc/adflib
+        cp -vR doc/API doc/FAQ AUTHORS BUGS.md COPYING* ChangeLog NOTES.md \
+            README.md TODO \
+            /usr/local/share/doc/adflib/
+        tar cvzf adflib-macos.tgz \
+            /usr/local/bin/*adf* \
+            /usr/local/include/adf/ \
+            /usr/local/lib/*adf* \
+            /usr/local/share/doc/adflib/ \
             /usr/local/share/man/man1/*adf*
     - uses: actions/upload-artifact@v4
       with:

@@ -30,7 +30,6 @@
 #include "adf_err.h"
 #include "adf_limits.h"
 
-#include <errno.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -157,22 +156,7 @@ static struct AdfDevice * adfDevDumpOpen( const char * const   name,
     }
 
     FILE ** const fd = &( ( (struct DevDumpData *) dev->drvData )->fd );
-
-    errno = 0;
-    if ( ! dev->readOnly ) {
-        *fd = fopen( name, "rb+" );
-        /* force read only */
-        if ( *fd == NULL && ( errno == EACCES || errno == EROFS ) ) {
-            *fd = fopen( name, "rb" );
-            dev->readOnly = true;
-            if ( *fd != NULL )
-                adfEnv.wFct( "%s: fopen, read-only mode forced", __func__ );
-        }
-    }
-    else
-        /* read only requested */
-        *fd = fopen( name, "rb" );
-
+    *fd = fopen( name, dev->readOnly ? "rb" : "rb+" );
     if ( *fd == NULL ) {
         adfEnv.eFct( "%s: fopen", __func__ );
         free( dev->drvData );

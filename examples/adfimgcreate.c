@@ -107,7 +107,7 @@ int main( const int                   argc,
 {
     struct newdev devreq;
 
-    if ( argc < 3 || ! parse_args( &argc, argv, &devreq ) ) {
+    if ( ! parse_args( &argc, argv, &devreq ) ) {
         usage( stderr );
         return 1;
     }
@@ -164,7 +164,7 @@ bool parse_args( const int * const           argc,
     struct options_set { bool g, k, m, t; } options_set = {
         false, false, false, false
     };
-    const char * valid_options = "g:k:m:t:h";
+    const char * valid_options = "g:k:m:t:hV";
     int opt;
     while ( ( opt = getopt( *argc, (char * const *) argv, valid_options ) ) != -1 ) {
         //fprintf( stderr, "optind %d, opt %c, optarg %s\n", optind, (char) opt, optarg );
@@ -287,6 +287,15 @@ bool parse_args( const int * const           argc,
             usage( stdout );
             exit( 0 );
 
+        case 'V':
+                /* knowing also the build version of ADFlib is useful, in case
+                   of any issues and version discrepancy (build vs. runtime) */
+                printf("%s, powered by ADFlib: build   v%s (%s)\n"
+                       "                           runtime v%s (%s)\n",
+                       ADFLIB_VERSION, ADFLIB_VERSION, ADFLIB_DATE,
+                       adfGetVersionNumber(), adfGetVersionDate());
+                exit( 0 );
+
         default:
             return false;
         }
@@ -294,7 +303,8 @@ bool parse_args( const int * const           argc,
 
     /* the name of the adf image - required */
     if ( optind > *argc - 1 ) {
-        fprintf( stderr, "Missing filename of the device image to create.\n" );
+        fprintf( stderr, "Missing filename of the device image to create "
+                 "(or -h for help).\n" );
         exit(1);
     }
     devreq->adfname = argv[ optind++ ];

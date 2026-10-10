@@ -28,8 +28,9 @@
 
 #include "adf_dev_driver_nativ.h"
 
-int main(int argc, char *argv[]) {
-
+int main( const int          argc,
+          const char * const argv[] )
+{
     adfLibInit();
     parse_args(argc, argv);
 
@@ -102,8 +103,17 @@ int main(int argc, char *argv[]) {
         /* extract files */
         if ( args.file_list ) {
             /* extract list of files given on command line */
+            char filepath[PATH_MAX + 1];
             for ( struct AdfList *node = args.file_list; node; node = node->next ) {
-                extract_filepath(vol, node->content);
+                if ( strlen( node->content ) > PATH_MAX ) {
+                    fprintf( stderr, "Path too long, error: '%s'\n",
+                             (const char *) node->content );
+                    break;  // continue ?
+                }
+                strncpy( filepath, node->content, PATH_MAX );
+                filepath[ PATH_MAX ] = '\0';
+
+                extract_filepath( vol, filepath );
 
                 if ( args.pipe_mode ) {
                     /* only extract one file in pipe mode */

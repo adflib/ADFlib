@@ -30,7 +30,8 @@
 struct Args args;
 
 /* parses the command line arguments into global variables */
-void parse_args(int argc, char *argv[])
+void parse_args( const int                  argc,
+                 const char * const * const argv )
 {
     memset( &args, 0, sizeof(args) );
 

@@ -38,7 +38,7 @@ struct Args {
         pipe_mode,
         win32_mangle;
 
-    char
+    const char
         *adf_file,
         *extract_dir;
 
@@ -49,5 +49,7 @@ struct Args {
 
 extern struct Args args;
 
-void parse_args(int argc, char *argv[]);
+void parse_args( const int                  argc,
+                 const char * const * const argv );
+
 void help(FILE * const stream);

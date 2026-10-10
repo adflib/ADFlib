@@ -28,10 +28,16 @@
 
 #include "adf_dev_driver_nativ.h"
 
+#include <stdlib.h>
+
 int main( const int          argc,
           const char * const argv[] )
 {
-    adfLibInit();
+    if ( adfLibInit() != ADF_RC_OK ) {
+        fprintf( stderr, "Error initializing ADFlib - aborting...\n" );
+        return EXIT_FAILURE;
+    }
+
     parse_args(argc, argv);
 
     adfAddDeviceDriver( &adfDeviceDriverNative );
@@ -41,12 +47,15 @@ int main( const int          argc,
                                                ADF_ACCESS_MODE_READONLY );
     if ( !dev ) {
         fprintf(stderr, "%s: can't open device\n", args.adf_file);
-        goto error_handler;
+        return EXIT_FAILURE;
     }
+
+    int rc = EXIT_SUCCESS;
 
     /* mount device */
     if (adfDevMount(dev) != ADF_RC_OK) {
         fprintf(stderr, "%s: can't mount device\n", args.adf_file);
+        rc = EXIT_FAILURE;
         goto error_handler;
     }
     if ( !args.pipe_mode ) {
@@ -59,6 +68,7 @@ int main( const int          argc,
     {
         fprintf(stderr, "%s: volume %d is invalid (device has %d volume(s))\n",
                 args.adf_file, args.vol_number, dev->nVol);
+        rc = EXIT_FAILURE;
         goto error_handler;
     }
 
@@ -67,6 +77,7 @@ int main( const int          argc,
     if ( !vol ) {
         fprintf(stderr, "%s: can't mount volume %d\n",
                 args.adf_file, args.vol_number);
+        rc = EXIT_FAILURE;
         goto error_handler;
     }
     if ( !args.pipe_mode ) {
@@ -75,6 +86,7 @@ int main( const int          argc,
 
     if ( args.pipe_mode && !args.file_list ) {
         fprintf(stderr, "can't use pipe mode without giving a file name to extract\n");
+        rc = EXIT_FAILURE;
         goto error_handler;
     }
 
@@ -113,7 +125,8 @@ int main( const int          argc,
                 strncpy( filepath, node->content, PATH_MAX );
                 filepath[ PATH_MAX ] = '\0';
 
-                extract_filepath( vol, filepath );
+                if ( extract_filepath( vol, filepath ) != ADF_RC_OK )
+                    rc = EXIT_FAILURE;
 
                 if ( args.pipe_mode ) {
                     /* only extract one file in pipe mode */
@@ -124,7 +137,8 @@ int main( const int          argc,
         else {
             /* extract all files */
             struct AdfList * const list = adfGetRDirEnt(vol, vol->curDirPtr, true);
-            extract_tree(vol, list, "");
+            if ( extract_tree(vol, list, "") != ADF_RC_OK )
+                rc = EXIT_FAILURE;
             adfFreeDirList(list);
         }
     }
@@ -135,5 +149,6 @@ error_handler:
     if (dev) adfDevClose(dev);
     if ( args.file_list ) adfListFree( args.file_list );
     adfLibCleanUp();
-    return 0;
+
+    return rc;
 }

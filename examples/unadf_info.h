@@ -25,7 +25,11 @@
 
 #include "adflib.h"
 
-void print_device(struct AdfDevice *dev);
-void print_volume(struct AdfVolume * vol);
-void print_tree(struct AdfList *node, char *path);
-void print_entry(struct AdfEntry *e, char *path);
+void print_device( const struct AdfDevice * const dev );
+void print_volume( const struct AdfVolume * const vol );
+
+void print_tree( const struct AdfList * node,
+                 const char * const     path );
+
+void print_entry( const struct AdfEntry * const e,
+                  const char * const            path );

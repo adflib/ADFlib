@@ -30,7 +30,7 @@
 #include <stdlib.h>
 
 /* prints one line of information about a device */
-void print_device(struct AdfDevice *dev)
+void print_device( const struct AdfDevice * const dev )
 {
     printf("Device : %s. Cylinders = %d, Heads = %d, Sectors = %d. Volumes = %d\n",
         dev->type != ADF_DEVTYPE_UNKNOWN    ? adfDevTypeGetDescription( dev->type ) :
@@ -40,7 +40,7 @@ void print_device(struct AdfDevice *dev)
 }
 
 /* prints one line of information about a volume */
-void print_volume(struct AdfVolume *vol)
+void print_volume( const struct AdfVolume * const vol )
 {
     ADF_SECTNUM num_blocks = vol->lastBlock - vol->firstBlock + 1;
 
@@ -72,7 +72,8 @@ void print_volume(struct AdfVolume *vol)
 }
 
 /* recurses through all directories/files and calls print_entry() on them */
-void print_tree(struct AdfList *node, char *path)
+void print_tree( const struct AdfList * node,
+                 const char * const     path )
 {
     for (; node; node = node->next) {
         print_entry(node->content, path);
@@ -86,7 +87,8 @@ void print_tree(struct AdfList *node, char *path)
 }
 
 /* prints one line of information about a directory/file entry */
-void print_entry(struct AdfEntry *e, char *path)
+void print_entry( const struct AdfEntry * const e,
+                  const char * const            path )
 {
     bool is_dir = e->type == ADF_ST_DIR;
     bool print_comment = args.show_comments && e->comment && *e->comment;

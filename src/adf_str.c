@@ -33,7 +33,7 @@
  * adds a cell at the end the list
  */
 struct AdfList * adfListNewCell( struct AdfList * const  list,
-                                 void * const            content )
+                                 const void * const      content )
 {
     struct AdfList * const cell = ( struct AdfList * )
         malloc( sizeof ( struct AdfList ) );

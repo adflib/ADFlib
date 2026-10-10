@@ -28,14 +28,14 @@
 #include "adf_types.h"
 
 struct AdfList {         /* generic linked tree */
-    void *            content;
+    const void *      content;
     struct AdfList *  subdir;
     struct AdfList *  next;
 };
 
 
 ADF_PREFIX struct AdfList * adfListNewCell( struct AdfList * const  list,
-                                            void * const            content );
+                                            const void * const      content );
 
 ADF_PREFIX void adfListFree( struct AdfList * const  list );
 

@@ -289,7 +289,7 @@ void adfFreeDirList( struct AdfList * const  list )
 
     root = cell = list;
     while ( cell != NULL ) {
-        adfFreeEntry( cell->content );
+        adfFreeEntry( (struct AdfEntry *) cell->content );
         if ( cell->subdir != NULL )
             adfFreeDirList( cell->subdir );
         cell = cell->next;

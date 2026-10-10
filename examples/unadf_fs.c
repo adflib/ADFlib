@@ -58,7 +58,8 @@
 
 
 /* set amiga file date on output file */
-void set_file_date(char *out, struct AdfEntry *e)
+void set_file_date( const char *const             out,
+                    const struct AdfEntry * const e )
 {
     struct tm tm;
     tm.tm_sec   = e->secs;
@@ -103,7 +104,8 @@ void set_file_date(char *out, struct AdfEntry *e)
 }
 
 /* OS-agnostic make directory function */
-static inline int makedir(char* path, mode_t perms)
+static inline int makedir( const char *const path,
+                           const mode_t      perms )
 {
 #ifdef DEBUG_UNADF
     fprintf (stderr, "%s: path '%s', perms 0x%08x\n",
@@ -125,7 +127,8 @@ static inline int makedir(char* path, mode_t perms)
 
 
 /* creates directory, if it does not already exist */
-void mkdir_if_needed(char *path, mode_t perms)
+void mkdir_if_needed( const char * const path,
+                      const mode_t       perms )
 {
     struct stat st;
     if (stat(path, &st) != 0 || !S_ISDIR(st.st_mode)) {
@@ -136,7 +139,7 @@ void mkdir_if_needed(char *path, mode_t perms)
 }
 
 /* convert amiga permissions to unix permissions */
-mode_t permissions(struct AdfEntry *e)
+mode_t permissions( const struct AdfEntry * const e )
 {
     return (mode_t)
         (!(e->access & 4) ? 0600 : 0400) | /* rw for user */
@@ -146,7 +149,7 @@ mode_t permissions(struct AdfEntry *e)
 }
 
 
-#ifndef HAVE_CHMOD
+#ifdef HAVE_CHMOD
 #include <sys/stat.h>
 
 void set_permissions( const char * const path,

@@ -39,7 +39,13 @@
 #  include <sys/types.h>
 #endif
 
-void set_file_date(char *out, struct AdfEntry *e);
-void mkdir_if_needed(char *path, mode_t perms);
-mode_t permissions(struct AdfEntry *e);
-void set_permissions(const char * const path, const mode_t perms);
+void set_file_date( const char *const            out,
+                    const struct AdfEntry *const e );
+
+void mkdir_if_needed( const char *const path,
+                      const mode_t      perms );
+
+mode_t permissions( const struct AdfEntry * const e );
+
+void set_permissions( const char * const path,
+                      const mode_t       perms );

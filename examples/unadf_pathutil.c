@@ -41,7 +41,9 @@
 #endif  // WIN32
 
 /* combines path and file to "path/file", or just "file" if path is blank */
-char *join_path(char *path, char *file) {
+char * join_path( const char *const path,
+                  const char *const file )
+{
     char *newpath = malloc(strlen(path) + strlen(file) + 2);
     if (!newpath) {
         print_error( args.adf_file );
@@ -52,10 +54,12 @@ char *join_path(char *path, char *file) {
 }
 
 /* creates a suitable output filename from the amiga filename */
-char *output_name(char *path, char *name) {
+char * output_name( const char *const path,
+                    const char *const name )
+{
     /* maybe (extract_dir + "/") + path + "/" + name + maybe "_" + "\0" */
     size_t dirlen = ( args.extract_dir ? strlen(args.extract_dir) + 1 : 0 );
-    char *out = malloc(dirlen + strlen(path) + strlen(name) + 3), *s, *o;
+    char *out = malloc(dirlen + strlen(path) + strlen(name) + 3), *o;
     if (!out) {
         print_error( args.adf_file );
         exit(1);
@@ -68,7 +72,8 @@ char *output_name(char *path, char *name) {
     }
 
     /* copy path and name, translating '/' to platform's separator */
-    for (s = path, o = &out[dirlen]; *s; s++) {
+    const char *s;
+    for ( s = path, o = &out[dirlen]; *s; s++ ) {
         *o++ = (*s == '/') ? DIRSEP : *s;
     }
     if (*path) {
@@ -113,7 +118,8 @@ char *output_name(char *path, char *name) {
  *
  * In this last case, the name will be _extended_ by 1 character!
  */
-void fix_win32_filename(char *name) {
+void fix_win32_filename( char *const name )
+{
     /* work forwards through name, replacing forbidden characters */
     char *o;
     for (o = name; *o; o++) {

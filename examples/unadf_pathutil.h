@@ -23,6 +23,10 @@
 
 #pragma once
 
-char * join_path(char *path, char *file);
-char * output_name(char *path, char *name);
-void fix_win32_filename(char *name);
+char * join_path( const char *const path,
+                  const char *const file );
+
+char * output_name( const char *const path,
+                    const char *const name );
+
+void fix_win32_filename( char *const name );

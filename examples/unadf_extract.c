@@ -166,16 +166,14 @@ void extract_file( struct AdfVolume * const vol,
                    const char * const       out,
                    const mode_t             perms )
 {
-    struct AdfFile *f = NULL;
-    uint8_t buf[EXTRACT_BUFFER_SIZE];
-    int fd = 0;
-
-    if ((f = adfFileOpen(vol, filename, ADF_FILE_MODE_READ)) == NULL)  {
+    struct AdfFile * const f = adfFileOpen(vol, filename, ADF_FILE_MODE_READ);
+    if ( f == NULL ) {
         fprintf(stderr, "%s: can't find file %s in volume\n", args.adf_file, filename);
         goto error_handler;
     }
 
     /* open local file for writing */
+    int fd = 0;
     if ( args.pipe_mode ) {
 #ifdef _WIN32
         fd = _fileno( stdout );
@@ -198,6 +196,7 @@ void extract_file( struct AdfVolume * const vol,
     }
 
     /* copy from volume to local file until EOF */
+    uint8_t buf[EXTRACT_BUFFER_SIZE];
     while (!adfFileAtEOF(f)) {
         unsigned n = adfFileRead(f, sizeof(buf), buf);
         if (n != sizeof(buf) && !adfFileAtEOF(f)) {

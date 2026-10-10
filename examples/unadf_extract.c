@@ -107,15 +107,15 @@ void extract_tree( struct AdfVolume * const vol,
 void extract_filepath( struct AdfVolume * const vol,
                        char * const             filepath )
 {
-    char *p, *element, *out;
-
     /* skip any leading slashes */
+    char *p;
     for (p = filepath; *p == '/';) p++;
 
     /* switch to root directory */
     adfToRootDir(vol);
 
     /* find each path element and adfChangeDir() to each element */
+    char *element;
     for (element = p; *p; p++) {
         if (*p == '/') {
             *p = 0;
@@ -140,6 +140,7 @@ void extract_filepath( struct AdfVolume * const vol,
             return;
         }
 
+        char *out;
         if (element == filepath) {
             /* no directory parts, just a filename */
             out = output_name("", element);

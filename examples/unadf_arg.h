@@ -28,23 +28,26 @@
 #include <stdbool.h>
 
 /* command-line arguments */
-extern bool
-    list_mode,
-    list_all,
-    use_dircache,
-    show_sectors,
-    show_comments,
-    pipe_mode,
-    win32_mangle;
+struct Args {
+    bool
+        list_mode,
+        list_all,
+        use_dircache,
+        show_sectors,
+        show_comments,
+        pipe_mode,
+        win32_mangle;
 
-extern char
-    *adf_file,
-    *extract_dir;
+    char
+        *adf_file,
+        *extract_dir;
 
-extern int vol_number;
+    int vol_number;
 
-extern struct AdfList *file_list;
+    struct AdfList *file_list;
+};
 
+extern struct Args args;
 
 void parse_args(int argc, char *argv[]);
 void help(FILE * const stream);

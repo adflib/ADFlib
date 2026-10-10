@@ -49,7 +49,7 @@ void print_volume(struct AdfVolume *vol)
         printf("Volume : %s,", adfDevTypeGetDescription( vol->dev->type ) );
         break;
     case ADF_DEVCLASS_HARDDISK:
-        printf("Volume : HD partition #%d %3.1f KBytes,", vol_number, num_blocks / 2.0);
+        printf("Volume : HD partition #%d %3.1f KBytes,", args.vol_number, num_blocks / 2.0);
         break;
     case ADF_DEVCLASS_HARDFILE:
         printf("Volume : HardFile %3.1f KBytes,", num_blocks / 2.0);
@@ -89,7 +89,7 @@ void print_tree(struct AdfList *node, char *path)
 void print_entry(struct AdfEntry *e, char *path)
 {
     bool is_dir = e->type == ADF_ST_DIR;
-    bool print_comment = show_comments && e->comment && *e->comment;
+    bool print_comment = args.show_comments && e->comment && *e->comment;
 
     /* do not print the links entries, ADFlib do not support them yet properly */
     if (e->type == ADF_ST_LFILE || e->type == ADF_ST_LDIR || e->type == ADF_ST_LSOFT) {
@@ -100,7 +100,7 @@ void print_entry(struct AdfEntry *e, char *path)
     printf(is_dir ? "       " : "%7d", e->size);
     printf("  %4d/%02d/%02d  %2d:%02d:%02d ",
         e->year, e->month, e->days, e->hour, e->mins, e->secs);
-    if (show_sectors) {
+    if ( args.show_sectors ) {
         printf(" %06d ", e->sector);
     }
     printf(" %s%s%s%s%s%s\n",

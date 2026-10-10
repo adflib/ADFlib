@@ -27,25 +27,15 @@
 
 #define UNADF_VERSION       ADFLIB_VERSION
 
-/* command-line arguments */
-bool list_mode     = false,
-     list_all      = false,
-     use_dircache  = false,
-     show_sectors  = false,
-     show_comments = false,
-     pipe_mode     = false,
-     win32_mangle  = false;
-char *adf_file    = NULL,
-     *extract_dir = NULL;
-int vol_number = 0;
-struct AdfList *file_list = NULL;
-
+struct Args args;
 
 /* parses the command line arguments into global variables */
 void parse_args(int argc, char *argv[]) {
     struct AdfList *list = NULL;
     int i;
     size_t j;
+
+    memset( &args, 0, sizeof(args) );
 
     /* parse flags */
     for (i = 1; i < argc && argv[i][0] == '-'; i++) {
@@ -60,10 +50,10 @@ void parse_args(int argc, char *argv[]) {
 
             switch (option) {
             case 'v':
-                vol_number = atoi ( argv[i + 1] );
+                args.vol_number = atoi ( argv[i + 1] );
                 break;
             case 'd':
-                extract_dir = argv[i + 1];
+                args.extract_dir = argv[i + 1];
                 break;
             //default: /* unknown option - show help and exit */
             //    help();
@@ -77,15 +67,15 @@ void parse_args(int argc, char *argv[]) {
         /* check options without arguments (can be given together) */
         for (j = 1; argv[i][j]; j++) {
             switch (argv[i][j]) {
-            case 'l': list_mode     = true; break;
-            case 'r': list_all      = true; break;
-            case 'c': use_dircache  = true; break;
-            case 's': show_sectors  = true; break;
-            case 'm': show_comments = true; break;
-            case 'w': win32_mangle  = true; break;
+            case 'l': args.list_mode     = true; break;
+            case 'r': args.list_all      = true; break;
+            case 'c': args.use_dircache  = true; break;
+            case 's': args.show_sectors  = true; break;
+            case 'm': args.show_comments = true; break;
+            case 'w': args.win32_mangle  = true; break;
             case 'p':
-                pipe_mode = true;
-                fprintf(stderr, list_mode
+                args.pipe_mode = true;
+                fprintf(stderr, args.list_mode
                     ? "-p option must be used with extraction, ignored\n"
                     : "sending files to pipe\n");
                 break;
@@ -109,7 +99,7 @@ void parse_args(int argc, char *argv[]) {
 
     /* ADF filename must come after options */
     if (i < argc) {
-        adf_file = argv[i++];
+        args.adf_file = argv[i++];
     }
     else {
         help(stderr);
@@ -119,8 +109,8 @@ void parse_args(int argc, char *argv[]) {
     /* list of files to extract can follow ADF filename */
     for (; i < argc; i++) {
         list = adfListNewCell(list, argv[i]);
-        if (!file_list) {
-            file_list = list;
+        if ( !args.file_list ) {
+            args.file_list = list;
         }
     }
 }

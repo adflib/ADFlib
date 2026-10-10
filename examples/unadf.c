@@ -39,47 +39,49 @@ int main(int argc, char *argv[]) {
     adfAddDeviceDriver( &adfDeviceDriverNative );
 
     /* open device */
-    if (!(dev = adfDevOpen(adf_file, ADF_ACCESS_MODE_READONLY))) {
-        fprintf(stderr, "%s: can't open device\n", adf_file);
+    if (!(dev = adfDevOpen(args.adf_file, ADF_ACCESS_MODE_READONLY))) {
+        fprintf(stderr, "%s: can't open device\n", args.adf_file);
         goto error_handler;
     }
 
     /* mount device */
     if (adfDevMount(dev) != ADF_RC_OK) {
-        fprintf(stderr, "%s: can't mount device\n", adf_file);
+        fprintf(stderr, "%s: can't mount device\n", args.adf_file);
         goto error_handler;
     }
-    if (!pipe_mode) {
+    if ( !args.pipe_mode ) {
         print_device(dev);
     }
 
     /* mount volume */
-    if (vol_number < 0 || vol_number >= dev->nVol) {
+    if ( args.vol_number < 0 ||
+         args.vol_number >= dev->nVol )
+    {
         fprintf(stderr, "%s: volume %d is invalid (device has %d volume(s))\n",
-            adf_file, vol_number, dev->nVol);
+                args.adf_file, args.vol_number, dev->nVol);
         goto error_handler;
     }
-    if (!(vol = adfVolMount(dev, vol_number, ADF_ACCESS_MODE_READONLY))) {
+    if (!(vol = adfVolMount(dev, args.vol_number, ADF_ACCESS_MODE_READONLY))) {
         fprintf(stderr, "%s: can't mount volume %d\n",
-            adf_file, vol_number);
+                args.adf_file, args.vol_number);
         goto error_handler;
     }
-    if (!pipe_mode) {
+    if ( !args.pipe_mode ) {
         print_volume(vol);
     }
 
-    if (pipe_mode && !file_list) {
+    if ( args.pipe_mode && !args.file_list ) {
         fprintf(stderr, "can't use pipe mode without giving a file name to extract\n");
         goto error_handler;
     }
 
-    if (list_mode || list_all) {
+    if ( args.list_mode || args.list_all ) {
         /* list files */
-        if (use_dircache && adfVolHasDIRCACHE(vol)) {
+        if ( args.use_dircache && adfVolHasDIRCACHE(vol) ) {
             adfEnvSetProperty(ADF_PR_USEDIRC, true);
             puts("Using dir cache blocks.");
         }
-        if (list_all) {
+        if ( args.list_all ) {
             /* list all files recursively */
             list = adfGetRDirEnt(vol, vol->curDirPtr, true);
             print_tree(list, "");
@@ -95,12 +97,12 @@ int main(int argc, char *argv[]) {
     }
     else {
         /* extract files */
-        if (file_list) {
+        if ( args.file_list ) {
             /* extract list of files given on command line */
-            for (node = file_list; node; node = node->next) {
+            for (node = args.file_list; node; node = node->next) {
                 extract_filepath(vol, node->content);
 
-                if (pipe_mode) {
+                if ( args.pipe_mode ) {
                     /* only extract one file in pipe mode */
                     break;
                 }
@@ -118,7 +120,7 @@ error_handler:
     if (vol) adfVolUnMount(vol);
     if (dev && dev->mounted) adfDevUnMount(dev);
     if (dev) adfDevClose(dev);
-    if (file_list) adfListFree(file_list);
+    if ( args.file_list ) adfListFree( args.file_list );
     adfLibCleanUp();
     return 0;
 }

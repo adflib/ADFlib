@@ -44,7 +44,7 @@
 char *join_path(char *path, char *file) {
     char *newpath = malloc(strlen(path) + strlen(file) + 2);
     if (!newpath) {
-        print_error(adf_file);
+        print_error( args.adf_file );
         exit(1);
     }
     sprintf(newpath, "%s%s%s", path, *path ? "/" : "", file);
@@ -54,16 +54,16 @@ char *join_path(char *path, char *file) {
 /* creates a suitable output filename from the amiga filename */
 char *output_name(char *path, char *name) {
     /* maybe (extract_dir + "/") + path + "/" + name + maybe "_" + "\0" */
-    size_t dirlen = ( extract_dir ? strlen(extract_dir) + 1 : 0 );
+    size_t dirlen = ( args.extract_dir ? strlen(args.extract_dir) + 1 : 0 );
     char *out = malloc(dirlen + strlen(path) + strlen(name) + 3), *s, *o;
     if (!out) {
-        print_error(adf_file);
+        print_error( args.adf_file );
         exit(1);
     }
 
     /* copy user's extract directory if needed */
     if (dirlen) {
-        strcpy(out, extract_dir);
+        strcpy(out, args.extract_dir );
         out[dirlen - 1] = DIRSEP;
     }
 
@@ -77,7 +77,7 @@ char *output_name(char *path, char *name) {
     strcpy(o, name);
 
     /* alter filenames that are a problem for Windows */
-    if (win32_mangle) {
+    if ( args.win32_mangle ) {
         fix_win32_filename(o);
     }
 
@@ -89,7 +89,7 @@ char *output_name(char *path, char *name) {
         }
     }
 
-    if (!pipe_mode) {
+    if ( !args.pipe_mode ) {
         /* create directories leading up to name, if needed */
         for (o = out; *o; o++) {
             if (o > out && *o == DIRSEP) {

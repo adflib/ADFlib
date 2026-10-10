@@ -67,7 +67,7 @@ void extract_tree(struct AdfVolume *vol, struct AdfList *node, char *path)
         fprintf( stderr, "%s: out '%s'\n", __func__, out );
 #endif
         if (e->type == ADF_ST_DIR) {
-            if (!pipe_mode) {
+            if ( !args.pipe_mode ) {
                 printf("x - %s/\n", out);
                 mkdir_if_needed(out, 0777 ); // temp. permissionss
                                              // ("w" is needed for extraction)
@@ -86,13 +86,13 @@ void extract_tree(struct AdfVolume *vol, struct AdfList *node, char *path)
             }
             else {
                 fprintf(stderr, "%s: can't find directory %s in volume\n",
-                    adf_file, newpath);
+                        args.adf_file, newpath);
             }
             free(newpath);
         }
 
         // set timestamp
-        if (!pipe_mode) {
+        if ( !args.pipe_mode ) {
             set_file_date(out, e);
             set_permissions( out, permissions(e) ); // real permissions
         }
@@ -119,7 +119,7 @@ void extract_filepath(struct AdfVolume *vol, char *filepath)
             if (*element) {
                 if (adfChangeDir(vol, element) != ADF_RC_OK) {
                     fprintf(stderr, "%s: can't find directory %s in volume\n",
-                        adf_file, filepath);
+                            args.adf_file, filepath);
                     return;
                 }
             }
@@ -133,7 +133,7 @@ void extract_filepath(struct AdfVolume *vol, char *filepath)
         struct AdfEntry * const entry = malloc(sizeof(struct AdfEntry));
         if (adfGetEntry(vol, vol->curDirPtr, element, entry) != ADF_RC_OK) {
             fprintf(stderr, "%s: can't get file permissions for %s\n",
-                adf_file, filepath);
+                    args.adf_file, filepath);
             return;
         }
 
@@ -160,12 +160,12 @@ void extract_file(struct AdfVolume *vol, char *filename, char *out, mode_t perms
     int fd = 0;
 
     if ((f = adfFileOpen(vol, filename, ADF_FILE_MODE_READ)) == NULL)  {
-        fprintf(stderr, "%s: can't find file %s in volume\n", adf_file, filename);
+        fprintf(stderr, "%s: can't find file %s in volume\n", args.adf_file, filename);
         goto error_handler;
     }
 
     /* open local file for writing */
-    if (pipe_mode) {
+    if ( args.pipe_mode ) {
 #ifdef _WIN32
         fd = _fileno( stdout );
         const int result = _setmode( fd, _O_BINARY );
@@ -191,7 +191,7 @@ void extract_file(struct AdfVolume *vol, char *filename, char *out, mode_t perms
         unsigned n = adfFileRead(f, sizeof(buf), buf);
         if (n != sizeof(buf) && !adfFileAtEOF(f)) {
             fprintf(stderr, "%s: error reading %s at %u\n",
-                adf_file, filename, adfFileGetPos(f));
+                    args.adf_file, filename, adfFileGetPos(f));
             goto error_handler;
         }
 
@@ -202,6 +202,6 @@ void extract_file(struct AdfVolume *vol, char *filename, char *out, mode_t perms
     }
 
 error_handler:
-    if (fd && !pipe_mode) close(fd);
+    if ( fd && !args.pipe_mode ) close(fd);
     if (f) adfFileClose(f);
 }

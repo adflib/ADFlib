@@ -28,6 +28,7 @@
 #include "unadf_pathutil.h"
 #include "unadf_util.h"
 
+#include <assert.h>
 #include <errno.h>
 #include <fcntl.h>
 #include <stdlib.h>
@@ -107,6 +108,9 @@ void extract_tree( struct AdfVolume * const vol,
 void extract_filepath( struct AdfVolume * const vol,
                        char * const             filepath )
 {
+    assert( filepath != NULL );
+    assert( vol != NULL );
+
     /* skip any leading slashes */
     char *p;
     for (p = filepath; *p == '/';) p++;

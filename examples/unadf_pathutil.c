@@ -58,8 +58,8 @@ char * output_name( const char *const path,
                     const char *const name )
 {
     /* maybe (extract_dir + "/") + path + "/" + name + maybe "_" + "\0" */
-    size_t dirlen = ( args.extract_dir ? strlen(args.extract_dir) + 1 : 0 );
-    char *out = malloc(dirlen + strlen(path) + strlen(name) + 3), *o;
+    const size_t dirlen = ( args.extract_dir ? strlen(args.extract_dir) + 1 : 0 );
+    char *const out = malloc(dirlen + strlen(path) + strlen(name) + 3);
     if (!out) {
         print_error( args.adf_file );
         exit(1);
@@ -72,8 +72,8 @@ char * output_name( const char *const path,
     }
 
     /* copy path and name, translating '/' to platform's separator */
-    const char *s;
-    for ( s = path, o = &out[dirlen]; *s; s++ ) {
+    char *o = &out[dirlen];
+    for ( const char *s = path; *s; s++ ) {
         *o++ = (*s == '/') ? DIRSEP : *s;
     }
     if (*path) {

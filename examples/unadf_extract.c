@@ -52,17 +52,19 @@
 
 
 /* extracts all files, recursing into directories */
-void extract_tree(struct AdfVolume *vol, struct AdfList *node, char *path)
+void extract_tree( struct AdfVolume * const vol,
+                   const struct AdfList    *node,
+                  const char * const        path )
 {
 #ifdef DEBUG_UNADF
     fprintf( stderr, "%s: path '%s'\n", __func__, path );
 #endif
 
     for (; node; node = node->next) {
-        struct AdfEntry *e = node->content;
+        const struct AdfEntry *e = node->content;
 
         /* extract file or create directory */
-        char *out = output_name(path, e->name);
+        char * const out = output_name(path, e->name);
 #ifdef DEBUG_UNADF
         fprintf( stderr, "%s: out '%s'\n", __func__, out );
 #endif
@@ -102,7 +104,8 @@ void extract_tree(struct AdfVolume *vol, struct AdfList *node, char *path)
 }
 
 /* follows a path to a file on disk and extracts just that file */
-void extract_filepath(struct AdfVolume *vol, char *filepath)
+void extract_filepath( struct AdfVolume * const vol,
+                       char * const             filepath )
 {
     char *p, *element, *out;
 
@@ -153,7 +156,10 @@ void extract_filepath(struct AdfVolume *vol, char *filepath)
 }
 
 /* copies a file from the volume to a given output filename */
-void extract_file(struct AdfVolume *vol, char *filename, char *out, mode_t perms)
+void extract_file( struct AdfVolume * const vol,
+                   const char * const       filename,
+                   const char * const       out,
+                   const mode_t             perms )
 {
     struct AdfFile *f = NULL;
     uint8_t buf[EXTRACT_BUFFER_SIZE];

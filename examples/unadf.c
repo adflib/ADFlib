@@ -29,9 +29,6 @@
 #include "adf_dev_driver_nativ.h"
 
 int main(int argc, char *argv[]) {
-    struct AdfDevice *dev = NULL;
-    struct AdfVolume *vol = NULL;
-    struct AdfList *list, *node;
 
     adfLibInit();
     parse_args(argc, argv);
@@ -39,7 +36,9 @@ int main(int argc, char *argv[]) {
     adfAddDeviceDriver( &adfDeviceDriverNative );
 
     /* open device */
-    if (!(dev = adfDevOpen(args.adf_file, ADF_ACCESS_MODE_READONLY))) {
+    struct AdfDevice * const dev = adfDevOpen( args.adf_file,
+                                               ADF_ACCESS_MODE_READONLY );
+    if ( !dev ) {
         fprintf(stderr, "%s: can't open device\n", args.adf_file);
         goto error_handler;
     }
@@ -61,7 +60,10 @@ int main(int argc, char *argv[]) {
                 args.adf_file, args.vol_number, dev->nVol);
         goto error_handler;
     }
-    if (!(vol = adfVolMount(dev, args.vol_number, ADF_ACCESS_MODE_READONLY))) {
+
+    struct AdfVolume * const vol = adfVolMount( dev, args.vol_number,
+                                                ADF_ACCESS_MODE_READONLY );
+    if ( !vol ) {
         fprintf(stderr, "%s: can't mount volume %d\n",
                 args.adf_file, args.vol_number);
         goto error_handler;
@@ -83,23 +85,24 @@ int main(int argc, char *argv[]) {
         }
         if ( args.list_all ) {
             /* list all files recursively */
-            list = adfGetRDirEnt(vol, vol->curDirPtr, true);
+            struct AdfList * const list = adfGetRDirEnt(vol, vol->curDirPtr, true);
             print_tree(list, "");
+            adfFreeDirList(list);
         }
         else {
             /* list contents of root directory */
-            list = adfGetDirEnt(vol, vol->curDirPtr);
-            for (node = list; node; node = node->next) {
+            struct AdfList * const list = adfGetDirEnt(vol, vol->curDirPtr);
+            for ( struct AdfList *node = list; node; node = node->next ) {
                 print_entry(node->content, "");
             }
+            adfFreeDirList(list);
         }
-        adfFreeDirList(list);
     }
     else {
         /* extract files */
         if ( args.file_list ) {
             /* extract list of files given on command line */
-            for (node = args.file_list; node; node = node->next) {
+            for ( struct AdfList *node = args.file_list; node; node = node->next ) {
                 extract_filepath(vol, node->content);
 
                 if ( args.pipe_mode ) {
@@ -110,7 +113,7 @@ int main(int argc, char *argv[]) {
         }
         else {
             /* extract all files */
-            list = adfGetRDirEnt(vol, vol->curDirPtr, true);
+            struct AdfList * const list = adfGetRDirEnt(vol, vol->curDirPtr, true);
             extract_tree(vol, list, "");
             adfFreeDirList(list);
         }

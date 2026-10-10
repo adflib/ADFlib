@@ -61,6 +61,18 @@ adfsalvage_SOURCES = adfsalvage.c
 adfsalvage_LDADD = $(ADFLIBS)
 adfsalvage_DEPENDENCIES = $(top_builddir)/src/libadf.la
 
-unadf_SOURCES = unadf.c
+unadf_SOURCES = unadf.c \
+  unadf_arg.c \
+  unadf_arg.h \
+  unadf_extract.c \
+  unadf_extract.h \
+  unadf_fs.c \
+  unadf_fs.h \
+  unadf_pathutil.c \
+  unadf_pathutil.h \
+  unadf_util.c \
+  unadf_util.h \
+  unadf_win32.c \
+  unadf_win32.h
 unadf_LDADD = $(ADFLIBS)
 unadf_DEPENDENCIES = $(top_builddir)/src/libadf.la

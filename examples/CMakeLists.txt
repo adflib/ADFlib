@@ -92,7 +92,23 @@ set_target_properties ( adfsalvage PROPERTIES
   INSTALL_RPATH "/usr/local/lib"
 )
 
-add_executable ( unadf unadf.c )
+add_executable ( unadf
+  unadf.c
+  unadf_arg.c
+  unadf_arg.h
+  unadf_extract.c
+  unadf_extract.h
+  unadf_fs.c
+  unadf_fs.h
+  unadf_info.c
+  unadf_info.h
+  unadf_pathutil.c
+  unadf_pathutil.h
+  unadf_util.c
+  unadf_util.h
+  unadf_win32.c
+  unadf_win32.h
+)
 target_link_libraries ( unadf adf )
 set_target_properties ( unadf PROPERTIES
   #  INSTALL_RPATH "${CMAKE_INSTALL_LIBDIR}"

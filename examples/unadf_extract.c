@@ -53,14 +53,15 @@
 
 
 /* extracts all files, recursing into directories */
-void extract_tree( struct AdfVolume * const vol,
-                   const struct AdfList    *node,
-                  const char * const        path )
+ADF_RETCODE extract_tree( struct AdfVolume * const vol,
+                          const struct AdfList    *node,
+                          const char * const        path )
 {
 #ifdef DEBUG_UNADF
     fprintf( stderr, "%s: path '%s'\n", __func__, path );
 #endif
 
+    unsigned nerrors = 0;
     for (; node; node = node->next) {
         const struct AdfEntry *e = node->content;
 
@@ -77,14 +78,16 @@ void extract_tree( struct AdfVolume * const vol,
             }
         }
         else if (e->type == ADF_ST_FILE) {
-            extract_file(vol, e->name, out, permissions(e));
+            if ( extract_file(vol, e->name, out, permissions(e) ) != ADF_RC_OK )
+                nerrors++;
         }
 
         /* recurse into subdirectories */
         if (node->subdir) {
             char *newpath = join_path(path, e->name);
             if (adfChangeDir(vol, e->name) == ADF_RC_OK) {
-                extract_tree(vol, node->subdir, newpath);
+                if ( extract_tree(vol, node->subdir, newpath) != ADF_RC_OK )
+                    nerrors++;
                 adfParentDir(vol);
             }
             else {
@@ -102,14 +105,18 @@ void extract_tree( struct AdfVolume * const vol,
 
         free(out);
     }
+
+    return ( nerrors == 0 ? ADF_RC_OK : ADF_RC_ERROR );
 }
 
 /* follows a path to a file on disk and extracts just that file */
-void extract_filepath( struct AdfVolume * const vol,
+ADF_RETCODE extract_filepath( struct AdfVolume * const vol,
                        char * const             filepath )
 {
     assert( filepath != NULL );
     assert( vol != NULL );
+
+    ADF_RETCODE rc = ADF_RC_OK;
 
     /* skip any leading slashes */
     char *p;
@@ -127,7 +134,7 @@ void extract_filepath( struct AdfVolume * const vol,
                 if (adfChangeDir(vol, element) != ADF_RC_OK) {
                     fprintf(stderr, "%s: can't find directory %s in volume\n",
                             args.adf_file, filepath);
-                    return;
+                    return ADF_RC_ERROR;
                 }
             }
             *p = '/';
@@ -141,7 +148,7 @@ void extract_filepath( struct AdfVolume * const vol,
         if (adfGetEntry(vol, vol->curDirPtr, element, entry) != ADF_RC_OK) {
             fprintf(stderr, "%s: can't get file permissions for %s\n",
                     args.adf_file, filepath);
-            return;
+            return ADF_RC_ERROR;
         }
 
         char *out;
@@ -154,21 +161,26 @@ void extract_filepath( struct AdfVolume * const vol,
             out = output_name(filepath, element);
         }
 
-        extract_file(vol, element, out, permissions(entry));
+        rc = extract_file(vol, element, out, permissions(entry));
         adfFreeEntry(entry);
         free(out);
     }
+
+    return rc;
 }
 
 /* copies a file from the volume to a given output filename */
-void extract_file( struct AdfVolume * const vol,
-                   const char * const       filename,
-                   const char * const       out,
-                   const mode_t             perms )
+ADF_RETCODE extract_file( struct AdfVolume * const vol,
+                          const char * const       filename,
+                          const char * const       out,
+                          const mode_t             perms )
 {
+    ADF_RETCODE rc = ADF_RC_OK;
+
     struct AdfFile * const f = adfFileOpen(vol, filename, ADF_FILE_MODE_READ);
     if ( f == NULL ) {
         fprintf(stderr, "%s: can't find file %s in volume\n", args.adf_file, filename);
+        rc = ADF_RC_ERROR;
         goto error_handler;
     }
 
@@ -180,6 +192,7 @@ void extract_file( struct AdfVolume * const vol,
         const int result = _setmode( fd, _O_BINARY );
         if ( result == -1 ) {
             perror( "Cannot set binary mode" );
+            rc = ADF_RC_ERROR;
             goto error_handler;
         }
 #else
@@ -191,6 +204,7 @@ void extract_file( struct AdfVolume * const vol,
         fd = open(out, O_CREAT | O_WRONLY | O_TRUNC | O_BINARY, perms);
         if (fd < 0) {
             print_error(out);
+            rc = ADF_RC_ERROR;
             goto error_handler;
         }
     }
@@ -202,11 +216,13 @@ void extract_file( struct AdfVolume * const vol,
         if (n != sizeof(buf) && !adfFileAtEOF(f)) {
             fprintf(stderr, "%s: error reading %s at %u\n",
                     args.adf_file, filename, adfFileGetPos(f));
+            rc = ADF_RC_ERROR;
             goto error_handler;
         }
 
         if (write(fd, buf, n) != n) {
             print_error(out);
+            rc = ADF_RC_ERROR;
             goto error_handler;
         }
     }
@@ -214,4 +230,6 @@ void extract_file( struct AdfVolume * const vol,
 error_handler:
     if ( fd && !args.pipe_mode ) close(fd);
     if (f) adfFileClose(f);
+
+    return rc;
 }

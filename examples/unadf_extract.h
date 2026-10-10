@@ -26,14 +26,14 @@
 #include "adflib.h"
 #include "unadf_fs.h"
 
-void extract_tree( struct AdfVolume * const vol,
-                   const struct AdfList    *node,
-                   const char * const       path );
+ADF_RETCODE extract_tree( struct AdfVolume * const vol,
+                          const struct AdfList    *node,
+                          const char * const       path );
 
-void extract_filepath( struct AdfVolume * const vol,
-                       char * const             filepath );
+ADF_RETCODE extract_filepath( struct AdfVolume * const vol,
+                              char * const             filepath );
 
-void extract_file( struct AdfVolume * const vol,
-                   const char * const       filename,
-                   const char * const       out,
-                   const mode_t             perms );
+ADF_RETCODE extract_file( struct AdfVolume * const vol,
+                          const char * const       filename,
+                          const char * const       out,
+                          const mode_t             perms );

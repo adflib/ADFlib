@@ -30,7 +30,8 @@
 struct Args args;
 
 /* parses the command line arguments into global variables */
-void parse_args(int argc, char *argv[]) {
+void parse_args(int argc, char *argv[])
+{
     memset( &args, 0, sizeof(args) );
 
     /* parse flags */
@@ -47,7 +48,7 @@ void parse_args(int argc, char *argv[]) {
 
             switch (option) {
             case 'v':
-                args.vol_number = atoi ( argv[i + 1] );
+                args.vol_number = atoi( argv[i + 1] );
                 break;
             case 'd':
                 args.extract_dir = argv[i + 1];
@@ -113,7 +114,8 @@ void parse_args(int argc, char *argv[]) {
     }
 }
 
-void help(FILE * const stream) {
+void help(FILE * const stream)
+{
     fprintf(stream,
         "\nunADF - an unzip-like utility for .ADF files.\n\n"
         "Usage:  unadf [-lrcsmpwV] [-v n] [-d extractdir] dumpname.adf [files-with-path]\n\n"

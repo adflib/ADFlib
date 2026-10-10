@@ -31,13 +31,10 @@ struct Args args;
 
 /* parses the command line arguments into global variables */
 void parse_args(int argc, char *argv[]) {
-    struct AdfList *list = NULL;
-    int i;
-    size_t j;
-
     memset( &args, 0, sizeof(args) );
 
     /* parse flags */
+    int i;
     for (i = 1; i < argc && argv[i][0] == '-'; i++) {
 
         /* check options with arguments first */
@@ -60,12 +57,13 @@ void parse_args(int argc, char *argv[]) {
             //    exit(1);
             }
 
-            i++, j = strlen(argv[i]) - 1; /* skip to next arg */
+            i++;                            // skip to next arg
+            //j = strlen(argv[i]) - 1;      // result of this not used anywhere(???)
             continue;
         }
 
         /* check options without arguments (can be given together) */
-        for (j = 1; argv[i][j]; j++) {
+        for (size_t j = 1; argv[i][j]; j++) {
             switch (argv[i][j]) {
             case 'l': args.list_mode     = true; break;
             case 'r': args.list_all      = true; break;
@@ -107,7 +105,7 @@ void parse_args(int argc, char *argv[]) {
     }
 
     /* list of files to extract can follow ADF filename */
-    for (; i < argc; i++) {
+    for ( struct AdfList *list = NULL; i < argc; i++) {
         list = adfListNewCell(list, argv[i]);
         if ( !args.file_list ) {
             args.file_list = list;

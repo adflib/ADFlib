@@ -28,5 +28,3 @@ char * join_path( const char *const path,
 
 char * output_name( const char *const path,
                     const char *const name );
-
-void fix_win32_filename( char *const name );

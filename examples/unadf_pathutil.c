@@ -40,6 +40,9 @@
 #  define DIRSEP '/'
 #endif  // WIN32
 
+static void fix_win32_path( char *const name );
+
+
 /* combines path and file to "path/file", or just "file" if path is blank */
 char * join_path( const char *const path,
                   const char *const file )
@@ -81,11 +84,6 @@ char * output_name( const char *const path,
     }
     strcpy(o, name);
 
-    /* alter filenames that are a problem for Windows */
-    if ( args.win32_mangle ) {
-        fix_win32_filename(o);
-    }
-
     /* search for "../" and change to "xx" to stop directory traversal */
     for (o = &out[dirlen]; *o; o++) {
         if (o[0] == '.' && o[1] == '.' && (o[2] == '/' || o[2] == '\\')) {
@@ -93,6 +91,10 @@ char * output_name( const char *const path,
             o += 2;
         }
     }
+
+    /* alter paths that are a problem for Windows */
+    if ( args.win32_mangle )
+        fix_win32_path( out );
 
     if ( !args.pipe_mode ) {
         /* create directories leading up to name, if needed */
@@ -109,7 +111,7 @@ char * output_name( const char *const path,
 }
 
 
-/* alter filenames that would cause problems on Windows:
+/* alter file- and directory names that would cause problems on Windows:
  * https://learn.microsoft.com/en-us/windows/win32/fileio/naming-a-file
  * 1. replace characters : * " ? < > | / \ and chars 1-31 with underscore
  * 2. replace any trailng dot or space with underscore (breaks Windows File Explorer)
@@ -118,7 +120,7 @@ char * output_name( const char *const path,
  *
  * In this last case, the name will be _extended_ by 1 character!
  */
-void fix_win32_filename( char *const name )
+static void fix_win32_name( char *const name )
 {
     /* work forwards through name, replacing forbidden characters */
     char *o;
@@ -167,5 +169,21 @@ void fix_win32_filename( char *const name )
     /* not a reserved name, restore file extension */
     if (ext) {
         *ext = '.';
+    }
+}
+
+static void fix_win32_path( char *const path )
+{
+    for ( char *name = path; name; ) {
+        char *nextsep = strchr( name, DIRSEP );
+        if ( nextsep ) {
+            *nextsep = '\0';
+            fix_win32_name( name );
+            *nextsep = DIRSEP;
+            name = nextsep + 1;
+        } else {
+            fix_win32_name( name );
+            break;
+        }
     }
 }

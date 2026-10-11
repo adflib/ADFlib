@@ -45,7 +45,7 @@ run_cmd()
 {
     echo "============================================================="
     #stdbuf -oL
-    if [ ${OSTYPE} == "msys" ]
+    if [ "${OSTYPE}x" = "msysx" ]
     then
 	local EXEC=${1}.exe
     else

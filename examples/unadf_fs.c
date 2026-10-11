@@ -125,6 +125,28 @@ static inline int makedir( const char *const path,
 #endif
 }
 
+/* create directory tree, if needed
+   return value: 0 - success, -1 - failure */
+int make_dir_tree( const char * const dirpath,
+                   const char         dirsep )
+{
+    if ( strlen( dirpath ) > PATH_MAX )
+        return -1;
+
+    char path[PATH_MAX + 1];
+    strncpy( path, dirpath, PATH_MAX );
+    path[ PATH_MAX ] = '\0';
+
+    for ( char *p = path; *p; p++ ) {
+        if ( p > path && *p == dirsep ) {
+            *p = 0;
+            mkdir_if_needed( path, 0777 );
+            *p = dirsep;
+        }
+    }
+
+    return 0;
+}
 
 /* creates directory, if it does not already exist */
 void mkdir_if_needed( const char * const path,
@@ -137,6 +159,7 @@ void mkdir_if_needed( const char * const path,
         }
     }
 }
+
 
 /* convert amiga permissions to unix permissions */
 mode_t permissions( const struct AdfEntry * const e )

@@ -97,13 +97,12 @@ char * output_name( const char *const path,
         fix_win32_path( out );
 
     if ( !args.pipe_mode ) {
-        /* create directories leading up to name, if needed */
-        for (o = out; *o; o++) {
-            if (o > out && *o == DIRSEP) {
-                *o = 0;
-                mkdir_if_needed(out, 0777);
-                *o = DIRSEP;
-            }
+        /* create directories leading up to the leaf name, if needed */
+        char *last_slash = strrchr( out, DIRSEP );
+        if ( last_slash ) {
+            *last_slash = '\0';                 // temp. cut off leaf name
+            make_dir_tree( out, DIRSEP );
+            *last_slash = DIRSEP;
         }
     }
 

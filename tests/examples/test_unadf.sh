@@ -82,14 +82,14 @@ check_extract_to_pipe_option() {
 
 # -w (mangle win32 filenames) option
 check_mangle_win32_filenames_option() {
-    $unadf -d $tmpdir/x -w "$dumps_dir/win32-names.adf" >$actual 2>/dev/null
+    $unadf -d $tmpdir/x -w "win32-names.adf" >$actual 2>/dev/null
     compare_with "-w (mangle win32 filenames) option" \
         unadf_mangle_win32_filenames_option
 }
 
 # confirm the mangling (-w) only occurs on extraction
 check_confirm_the_mangling() {
-    $unadf -r -w "$dumps_dir/win32-names.adf" >$actual 2>/dev/null
+    $unadf -r -w "win32-names.adf" >$actual 2>/dev/null
     compare_with "confirm the mangling (-w) only occurs on extraction" \
         unadf_confirm_the_mangling
 }
@@ -105,10 +105,10 @@ check_extract_to_dir
 check_extract_to_dir_with_specific_files
 check_extract_to_pipe_option
 
-gzip -cd "$dumps_dir/win32-names.adf.gz" > "$dumps_dir/win32-names.adf"
+gzip -cd "$dumps_dir/win32-names.adf.gz" > "win32-names.adf"
 check_mangle_win32_filenames_option
 check_confirm_the_mangling
-rm -f "$dumps_dir/win32-names.adf"
+rm -f "win32-names.adf"
 
 read status < $status && test "x$status" = xsuccess
 echo "status: $status"

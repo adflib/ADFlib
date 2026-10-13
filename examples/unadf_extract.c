@@ -103,6 +103,7 @@ ADF_RETCODE extract_tree( struct AdfVolume * const vol,
             else {
                 fprintf(stderr, "%s: can't find directory %s in volume\n",
                         args.adf_file, newpath);
+                nerrors++;
             }
             free(newpath);
         }

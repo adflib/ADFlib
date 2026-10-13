@@ -133,7 +133,7 @@ ADF_RETCODE extract_filepath( struct AdfVolume * const vol,
 
     /* skip any leading slashes */
     char *p;
-    for (p = filepath; *p == '/';) p++;
+    for ( p = filepath; *p == DIRSEP; p++ );
 
     /* switch to root directory */
     adfToRootDir(vol);

@@ -104,8 +104,11 @@ check_show_logical_block_pointer_option
 check_extract_to_dir
 check_extract_to_dir_with_specific_files
 check_extract_to_pipe_option
+
+gzip -cd "$dumps_dir/win32-names.adf.gz" > "$dumps_dir/win32-names.adf"
 check_mangle_win32_filenames_option
 check_confirm_the_mangling
+rm -f "$dumps_dir/win32-names.adf"
 
 read status < $status && test "x$status" = xsuccess
 echo "status: $status"

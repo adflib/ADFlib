@@ -1,5 +1,30 @@
 Device : 880 KiB floppy. Cylinders = 80, Heads = 2, Sectors = 11. Volumes = 1
-Volume : 880 KiB floppy, "win32-names" between sectors [0-1759]. FFS DIRCACHE. Filled at 5.0%.
+Volume : 880 KiB floppy, "win32-names" between sectors [0-1759]. FFS DIRCACHE. Filled at 7.8%.
+x - TEMPDIR/x/dirtest/
+x - TEMPDIR/x/dirtest/forbidden-suffixes/
+x - TEMPDIR/x/dirtest/forbidden-suffixes/test_______/
+x - TEMPDIR/x/dirtest/forbidden-suffixes/test_______/test.txt
+x - TEMPDIR/x/dirtest/forbidden-suffixes/______/
+x - TEMPDIR/x/dirtest/forbidden-suffixes/______/test.txt
+x - TEMPDIR/x/dirtest/forbidden-suffixes/R.E.M_/
+x - TEMPDIR/x/dirtest/forbidden-suffixes/R.E.M_/test.txt
+x - TEMPDIR/x/dirtest/forbidden-suffixes/   hello___/
+x - TEMPDIR/x/dirtest/forbidden-suffixes/   hello___/test.txt
+x - TEMPDIR/x/dirtest/forbidden-chars/
+x - TEMPDIR/x/dirtest/forbidden-chars/test_test_test/
+x - TEMPDIR/x/dirtest/forbidden-chars/test_test_test/test.txt
+x - TEMPDIR/x/dirtest/forbidden-chars/test_test_test/
+x - TEMPDIR/x/dirtest/forbidden-chars/test_test_test/test.txt
+x - TEMPDIR/x/dirtest/forbidden-chars/test_test_test/
+x - TEMPDIR/x/dirtest/forbidden-chars/test_test_test/test.txt
+x - TEMPDIR/x/dirtest/forbidden-chars/test_test_test/
+x - TEMPDIR/x/dirtest/forbidden-chars/test_test_test/test.txt
+x - TEMPDIR/x/dirtest/forbidden-chars/test_test_test/
+x - TEMPDIR/x/dirtest/forbidden-chars/test_test_test/test.txt
+x - TEMPDIR/x/dirtest/forbidden-chars/test_test_test/
+x - TEMPDIR/x/dirtest/forbidden-chars/test_test_test/test.txt
+x - TEMPDIR/x/dirtest/forbidden-chars/test_test_test/
+x - TEMPDIR/x/dirtest/forbidden-chars/test_test_test/test.txt
 x - TEMPDIR/x/win32-names.sh
 x - TEMPDIR/x/forbidden-files/
 x - TEMPDIR/x/forbidden-files/com6_.txt
@@ -46,6 +71,7 @@ x - TEMPDIR/x/forbidden-files/com9_.txt
 x - TEMPDIR/x/forbidden-files/lpt9_.txt
 x - TEMPDIR/x/forbidden-files/com8_.txt
 x - TEMPDIR/x/forbidden-files/lpt7_.txt
+x - TEMPDIR/x/win32-dirnames.sh
 x - TEMPDIR/x/not-forbidden/
 x - TEMPDIR/x/not-forbidden/auxx.txt
 x - TEMPDIR/x/not-forbidden/prnn.txt
@@ -70,3 +96,4 @@ x - TEMPDIR/x/forbidden-chars/test_test_test.txt
 x - TEMPDIR/x/forbidden-chars/test_test_test.txt
 x - TEMPDIR/x/forbidden-chars/test_test_test.txt
 x - TEMPDIR/x/forbidden-chars/test_test_test.txt
+x - TEMPDIR/x/win32-filenames.sh

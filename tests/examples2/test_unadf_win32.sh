@@ -49,10 +49,10 @@ setup() {
 
     mkdir -vp tmp/$testName
 
-    dumpName=win32-names.adf
+    dumpName=win32-names.adf.gz
     dumpFile=tmp/${testName}/${dumpName}
-    #gzip -cd ${dumpsDir}/${dumpName}.gz > $dumpFile
-    cat ${dumpsDir}/${dumpName} > $dumpFile
+    gzip -cd ${dumpsDir}/${dumpName} > $dumpFile
+    #cat ${dumpsDir}/${dumpName} > $dumpFile
 }
 
 #

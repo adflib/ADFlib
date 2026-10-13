@@ -1,5 +1,30 @@
 Device : 880 KiB floppy. Cylinders = 80, Heads = 2, Sectors = 11. Volumes = 1
-Volume : 880 KiB floppy, "win32-names" between sectors [0-1759]. FFS DIRCACHE. Filled at 5.0%.
+Volume : 880 KiB floppy, "win32-names" between sectors [0-1759]. FFS DIRCACHE. Filled at 7.8%.
+         2026/10/12  21:03:43  dirtest/
+         2026/10/12  21:03:43  dirtest/forbidden-suffixes/
+         2026/10/12  21:03:43  dirtest/forbidden-suffixes/test. . . ./
+      0  2026/10/12  21:03:43  dirtest/forbidden-suffixes/test. . . ./test.txt
+         2026/10/12  21:03:43  dirtest/forbidden-suffixes/...   /
+      0  2026/10/12  21:03:43  dirtest/forbidden-suffixes/...   /test.txt
+         2026/10/12  21:03:43  dirtest/forbidden-suffixes/R.E.M./
+      0  2026/10/12  21:03:43  dirtest/forbidden-suffixes/R.E.M./test.txt
+         2026/10/12  21:03:43  dirtest/forbidden-suffixes/   hello   /
+      0  2026/10/12  21:03:43  dirtest/forbidden-suffixes/   hello   /test.txt
+         2026/10/12  21:03:43  dirtest/forbidden-chars/
+         2026/10/12  21:03:43  dirtest/forbidden-chars/test|test|test/
+      0  2026/10/12  21:03:43  dirtest/forbidden-chars/test|test|test/test.txt
+         2026/10/12  21:03:42  dirtest/forbidden-chars/test?test?test/
+      0  2026/10/12  21:03:42  dirtest/forbidden-chars/test?test?test/test.txt
+         2026/10/12  21:03:42  dirtest/forbidden-chars/test<test>test/
+      0  2026/10/12  21:03:42  dirtest/forbidden-chars/test<test>test/test.txt
+         2026/10/12  21:03:42  dirtest/forbidden-chars/test*test*test/
+      0  2026/10/12  21:03:42  dirtest/forbidden-chars/test*test*test/test.txt
+         2026/10/12  21:03:42  dirtest/forbidden-chars/test>test<test/
+      0  2026/10/12  21:03:42  dirtest/forbidden-chars/test>test<test/test.txt
+         2026/10/12  21:03:42  dirtest/forbidden-chars/test"test"test/
+      0  2026/10/12  21:03:42  dirtest/forbidden-chars/test"test"test/test.txt
+         2026/10/12  21:03:43  dirtest/forbidden-chars/test\test\test/
+      0  2026/10/12  21:03:43  dirtest/forbidden-chars/test\test\test/test.txt
    3398  2023/05/26  11:43:32  win32-names.sh
          2023/05/26  11:43:32  forbidden-files/
       0  2023/05/26  11:43:32  forbidden-files/com6.txt
@@ -46,6 +71,7 @@ Volume : 880 KiB floppy, "win32-names" between sectors [0-1759]. FFS DIRCACHE. F
       0  2023/05/26  11:43:33  forbidden-files/lpt9.txt
       0  2023/05/26  11:43:32  forbidden-files/com8.txt
       0  2023/05/26  11:43:32  forbidden-files/lpt7.txt
+   1494  2026/10/12  21:03:14  win32-dirnames.sh
          2023/05/26  11:43:33  not-forbidden/
       0  2023/05/26  11:43:33  not-forbidden/auxx.txt
       0  2023/05/26  11:43:33  not-forbidden/prnn.txt
@@ -70,3 +96,4 @@ Volume : 880 KiB floppy, "win32-names" between sectors [0-1759]. FFS DIRCACHE. F
       0  2023/05/26  11:43:32  forbidden-chars/test"test"test.txt
       0  2023/05/26  11:43:32  forbidden-chars/test*test*test.txt
       0  2023/05/26  11:43:32  forbidden-chars/test<test>test.txt
+   2864  2026/10/12  20:31:29  win32-filenames.sh

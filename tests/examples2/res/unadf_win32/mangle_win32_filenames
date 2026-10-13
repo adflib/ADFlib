@@ -1,5 +1,30 @@
 Device : 880 KiB floppy. Cylinders = 80, Heads = 2, Sectors = 11. Volumes = 1
-Volume : 880 KiB floppy, "win32-names" between sectors [0-1759]. FFS DIRCACHE. Filled at 5.0%.
+Volume : 880 KiB floppy, "win32-names" between sectors [0-1759]. FFS DIRCACHE. Filled at 7.8%.
+x - tmp/unadf_win32/mangle_win32_filenames/dirtest/
+x - tmp/unadf_win32/mangle_win32_filenames/dirtest/forbidden-suffixes/
+x - tmp/unadf_win32/mangle_win32_filenames/dirtest/forbidden-suffixes/test_______/
+x - tmp/unadf_win32/mangle_win32_filenames/dirtest/forbidden-suffixes/test_______/test.txt
+x - tmp/unadf_win32/mangle_win32_filenames/dirtest/forbidden-suffixes/______/
+x - tmp/unadf_win32/mangle_win32_filenames/dirtest/forbidden-suffixes/______/test.txt
+x - tmp/unadf_win32/mangle_win32_filenames/dirtest/forbidden-suffixes/R.E.M_/
+x - tmp/unadf_win32/mangle_win32_filenames/dirtest/forbidden-suffixes/R.E.M_/test.txt
+x - tmp/unadf_win32/mangle_win32_filenames/dirtest/forbidden-suffixes/   hello___/
+x - tmp/unadf_win32/mangle_win32_filenames/dirtest/forbidden-suffixes/   hello___/test.txt
+x - tmp/unadf_win32/mangle_win32_filenames/dirtest/forbidden-chars/
+x - tmp/unadf_win32/mangle_win32_filenames/dirtest/forbidden-chars/test_test_test/
+x - tmp/unadf_win32/mangle_win32_filenames/dirtest/forbidden-chars/test_test_test/test.txt
+x - tmp/unadf_win32/mangle_win32_filenames/dirtest/forbidden-chars/test_test_test/
+x - tmp/unadf_win32/mangle_win32_filenames/dirtest/forbidden-chars/test_test_test/test.txt
+x - tmp/unadf_win32/mangle_win32_filenames/dirtest/forbidden-chars/test_test_test/
+x - tmp/unadf_win32/mangle_win32_filenames/dirtest/forbidden-chars/test_test_test/test.txt
+x - tmp/unadf_win32/mangle_win32_filenames/dirtest/forbidden-chars/test_test_test/
+x - tmp/unadf_win32/mangle_win32_filenames/dirtest/forbidden-chars/test_test_test/test.txt
+x - tmp/unadf_win32/mangle_win32_filenames/dirtest/forbidden-chars/test_test_test/
+x - tmp/unadf_win32/mangle_win32_filenames/dirtest/forbidden-chars/test_test_test/test.txt
+x - tmp/unadf_win32/mangle_win32_filenames/dirtest/forbidden-chars/test_test_test/
+x - tmp/unadf_win32/mangle_win32_filenames/dirtest/forbidden-chars/test_test_test/test.txt
+x - tmp/unadf_win32/mangle_win32_filenames/dirtest/forbidden-chars/test_test_test/
+x - tmp/unadf_win32/mangle_win32_filenames/dirtest/forbidden-chars/test_test_test/test.txt
 x - tmp/unadf_win32/mangle_win32_filenames/win32-names.sh
 x - tmp/unadf_win32/mangle_win32_filenames/forbidden-files/
 x - tmp/unadf_win32/mangle_win32_filenames/forbidden-files/com6_.txt
@@ -46,6 +71,7 @@ x - tmp/unadf_win32/mangle_win32_filenames/forbidden-files/com9_.txt
 x - tmp/unadf_win32/mangle_win32_filenames/forbidden-files/lpt9_.txt
 x - tmp/unadf_win32/mangle_win32_filenames/forbidden-files/com8_.txt
 x - tmp/unadf_win32/mangle_win32_filenames/forbidden-files/lpt7_.txt
+x - tmp/unadf_win32/mangle_win32_filenames/win32-dirnames.sh
 x - tmp/unadf_win32/mangle_win32_filenames/not-forbidden/
 x - tmp/unadf_win32/mangle_win32_filenames/not-forbidden/auxx.txt
 x - tmp/unadf_win32/mangle_win32_filenames/not-forbidden/prnn.txt
@@ -70,3 +96,4 @@ x - tmp/unadf_win32/mangle_win32_filenames/forbidden-chars/test_test_test.txt
 x - tmp/unadf_win32/mangle_win32_filenames/forbidden-chars/test_test_test.txt
 x - tmp/unadf_win32/mangle_win32_filenames/forbidden-chars/test_test_test.txt
 x - tmp/unadf_win32/mangle_win32_filenames/forbidden-chars/test_test_test.txt
+x - tmp/unadf_win32/mangle_win32_filenames/win32-filenames.sh

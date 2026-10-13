@@ -51,6 +51,8 @@
 
 #endif  // WIN32
 
+#define DEFAULT_DIR_MODE 0777  // temp. directory permissions (before extracting
+                               // its contents ("w" is needed for extraction)
 
 /* extracts all files, recursing into directories */
 ADF_RETCODE extract_tree( struct AdfVolume * const vol,
@@ -72,7 +74,9 @@ ADF_RETCODE extract_tree( struct AdfVolume * const vol,
 #endif
 
         // create destination directory
-        if ( !args.pipe_mode && make_parent_dir_path( out ) != 0 ) {
+        if ( !args.pipe_mode &&
+             make_parent_dir_path( out, DEFAULT_DIR_MODE ) != 0 )
+        {
             nerrors++;
             // if parent dir cannot be created - cannot extract
             free(out);
@@ -83,8 +87,7 @@ ADF_RETCODE extract_tree( struct AdfVolume * const vol,
         if (e->type == ADF_ST_DIR) {
             if ( !args.pipe_mode ) {
                 printf("x - %s/\n", out);
-                mkdir_if_needed(out, 0777 ); // temp. permissionss
-                                             // ("w" is needed for extraction)
+                mkdir_if_needed( out, DEFAULT_DIR_MODE );
             }
         }
         else if (e->type == ADF_ST_FILE) {
@@ -175,7 +178,9 @@ ADF_RETCODE extract_filepath( struct AdfVolume * const vol,
             out = output_name(filepath, element);
         }
 
-        if ( !args.pipe_mode && make_parent_dir_path( out ) != 0 ) {
+        if ( !args.pipe_mode &&
+             make_parent_dir_path( out, DEFAULT_DIR_MODE ) != 0 )
+        {
             adfFreeEntry(entry);
             free(out);
             return ADF_RC_ERROR;

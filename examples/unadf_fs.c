@@ -131,7 +131,8 @@ static inline int makedir( const char *const path,
 
 /* create directory tree, if needed
    return value: 0 - success, -1 - failure */
-int make_dir_tree( const char * const dirpath )
+int make_dir_tree( const char * const dirpath,
+                   const mode_t       perms )
 {
     if ( dirpath == NULL )
         return -1;
@@ -150,11 +151,11 @@ int make_dir_tree( const char * const dirpath )
 
     for ( char *p = path + 1; ; p++ ) {
         if ( *p == '\0' )
-            return mkdir_if_needed( path, 0770 );
+            return mkdir_if_needed( path, perms );
 
         if ( *p == DIRSEP ) {
                 *p = 0;
-                if ( mkdir_if_needed( path, 0770 ) != 0 )
+                if ( mkdir_if_needed( path, perms ) != 0 )
                     return -1;
                 *p = DIRSEP;
         }
@@ -168,10 +169,10 @@ int make_dir_tree( const char * const dirpath )
         p = strchr( p, DIRSEP );
 
         if ( p == NULL )
-            return mkdir_if_needed( path, 0770 );
+            return mkdir_if_needed( path, perms );
 
         *p = '\0';
-        int rc = mkdir_if_needed( path, 0770 );
+        int rc = mkdir_if_needed( path, perms );
         if ( rc != 0 )
             return rc;
         *p = DIRSEP;
@@ -220,7 +221,8 @@ int mkdir_if_needed( const char * const path,
    (the last name in the given path).
 
    return value: 0 - success, -1 - failure */
-int make_parent_dir_path( char * const path )
+int make_parent_dir_path( char * const path,
+                          const mode_t perms )
 {
 #ifdef DEBUG_UNADF
     fprintf( stderr, "%s: '%s'\n", __func__, path );
@@ -229,7 +231,7 @@ int make_parent_dir_path( char * const path )
     int rc = 0;
     if ( last_sep ) {
         *last_sep = '\0';                 // temp. cut off leaf name
-        rc = make_dir_tree( path );
+        rc = make_dir_tree( path, perms );
         *last_sep = DIRSEP;
     }
 

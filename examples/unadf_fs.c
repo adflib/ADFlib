@@ -131,8 +131,7 @@ static inline int makedir( const char *const path,
 
 /* create directory tree, if needed
    return value: 0 - success, -1 - failure */
-int make_dir_tree( const char * const dirpath,
-                   const char         dirsep )
+int make_dir_tree( const char * const dirpath )
 {
     if ( dirpath != NULL )
         return -1;
@@ -153,20 +152,20 @@ int make_dir_tree( const char * const dirpath,
         if ( *p == '\0' )
             return mkdir_if_needed( path, 0770 );
 
-        if ( *p == dirsep ) {
+        if ( *p == DIRSEP ) {
                 *p = 0;
                 if ( mkdir_if_needed( path, 0770 ) != 0 )
                     return -1;
-                *p = dirsep;
+                *p = DIRSEP;
         }
     }
 
 /*  (variant 2)
     char *p = path;
-    for ( ; *p == dirsep; p++ );   // skip all leading separators
+    for ( ; *p == DIRSEP; p++ );   // skip all leading separators
 
     while ( true ) {
-        p = strchr( p, dirsep );
+        p = strchr( p, DIRSEP );
 
         if ( p == NULL )
             return mkdir_if_needed( path, 0770 );
@@ -175,7 +174,7 @@ int make_dir_tree( const char * const dirpath,
         int rc = mkdir_if_needed( path, 0770 );
         if ( rc != 0 )
             return rc;
-        *p = dirsep;
+        *p = DIRSEP;
 
         p++;
     }
@@ -221,18 +220,17 @@ int mkdir_if_needed( const char * const path,
    (the last name in the given path).
 
    return value: 0 - success, -1 - failure */
-int make_parent_dir_path( char * const path,
-                          const char   dirsep )
+int make_parent_dir_path( char * const path )
 {
 #ifdef DEBUG_UNADF
     fprintf( stderr, "%s: '%s'\n", __func__, path );
 #endif
-    char *last_sep = strrchr( path, dirsep );
+    char *last_sep = strrchr( path, DIRSEP );
     int rc = 0;
     if ( last_sep ) {
         *last_sep = '\0';                 // temp. cut off leaf name
-        rc = make_dir_tree( path, dirsep );
-        *last_sep = dirsep;
+        rc = make_dir_tree( path );
+        *last_sep = DIRSEP;
     }
 
     return rc;

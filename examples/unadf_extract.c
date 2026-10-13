@@ -70,7 +70,7 @@ ADF_RETCODE extract_tree( struct AdfVolume * const vol,
 #ifdef DEBUG_UNADF
         fprintf( stderr, "%s: out '%s'\n", __func__, out );
 #endif
-        if ( !args.pipe_mode && make_parent_dir_path(out, '/' ) != 0 ) {
+        if ( !args.pipe_mode && make_parent_dir_path( out ) != 0 ) {
             nerrors++;
             // if parent dir cannot be created - cannot extract
             free(out);
@@ -171,7 +171,7 @@ ADF_RETCODE extract_filepath( struct AdfVolume * const vol,
             out = output_name(filepath, element);
         }
 
-        if ( !args.pipe_mode && make_parent_dir_path(out, '/' ) != 0 ) {
+        if ( !args.pipe_mode && make_parent_dir_path( out ) != 0 ) {
             adfFreeEntry(entry);
             free(out);
             return ADF_RC_ERROR;

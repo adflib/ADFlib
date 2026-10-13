@@ -35,9 +35,6 @@
 #  if defined _MSC_VER
 #    define strcasecmp _stricmp
 #  endif
-#  define DIRSEP '\\'
-#else
-#  define DIRSEP '/'
 #endif  // WIN32
 
 static void fix_win32_path( char *const name );

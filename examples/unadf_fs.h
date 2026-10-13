@@ -39,17 +39,21 @@
 #  include <sys/types.h>
 #endif
 
+#ifdef WIN32
+#  define DIRSEP '\\'
+#else
+#  define DIRSEP '/'
+#endif
+
 void set_file_date( const char *const            out,
                     const struct AdfEntry *const e );
 
 int mkdir_if_needed( const char *const path,
                      const mode_t      perms );
 
-int make_dir_tree( const char * const dirpath,
-                   const char         dirsep );
+int make_dir_tree( const char * const dirpath );
 
-int make_parent_dir_path( char * const path,
-                          const char   dirsep );
+int make_parent_dir_path( char * const path );
 
 mode_t permissions( const struct AdfEntry * const e );
 

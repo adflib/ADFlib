@@ -116,23 +116,28 @@ int main( const int          argc,
         if ( args.file_list ) {
             /* extract list of files given on command line */
             char filepath[PATH_MAX + 1];
+            unsigned nerrors = 0;
             for ( struct AdfList *node = args.file_list; node; node = node->next ) {
                 if ( strlen( node->content ) > PATH_MAX ) {
                     fprintf( stderr, "Path too long, error: '%s'\n",
                              (const char *) node->content );
-                    break;  // continue ?
+                    nerrors++;
+                    continue;
                 }
                 strncpy( filepath, node->content, PATH_MAX );
                 filepath[ PATH_MAX ] = '\0';
 
                 if ( extract_filepath( vol, filepath ) != ADF_RC_OK )
-                    rc = EXIT_FAILURE;
+                    nerrors++;
 
                 if ( args.pipe_mode ) {
                     /* only extract one file in pipe mode */
                     break;
                 }
             }
+
+            if ( nerrors > 0 )
+                rc = EXIT_FAILURE;
         }
         else {
             /* extract all files */

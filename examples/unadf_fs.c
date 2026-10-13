@@ -108,7 +108,7 @@ void set_file_date( const char *const             out,
 static inline int makedir( const char *const path,
                            const mode_t      perms )
 {
-    if ( path != NULL )
+    if ( path == NULL )
         return -1;
 
 #ifdef DEBUG_UNADF
@@ -133,7 +133,7 @@ static inline int makedir( const char *const path,
    return value: 0 - success, -1 - failure */
 int make_dir_tree( const char * const dirpath )
 {
-    if ( dirpath != NULL )
+    if ( dirpath == NULL )
         return -1;
 
 #ifdef DEBUG_UNADF

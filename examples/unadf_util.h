@@ -24,6 +24,6 @@
 #pragma once
 
 // uncomment/define to enable debug info
-//#ifdef DEBUG_UNADF
+//#define DEBUG_UNADF
 
 void print_error(const char *s);

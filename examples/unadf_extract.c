@@ -211,7 +211,7 @@ ADF_RETCODE extract_file( struct AdfVolume * const vol,
     if ( f == NULL ) {
         fprintf(stderr, "%s: can't find file %s in volume\n", args.adf_file, filename);
         rc = ADF_RC_ERROR;
-        goto error_handler;
+        goto clean_up;
     }
 
     /* open local file for writing */
@@ -223,7 +223,7 @@ ADF_RETCODE extract_file( struct AdfVolume * const vol,
         if ( result == -1 ) {
             perror( "Cannot set binary mode" );
             rc = ADF_RC_ERROR;
-            goto error_handler;
+            goto clean_up;
         }
 #else
         fd = fileno( stdout );
@@ -235,7 +235,7 @@ ADF_RETCODE extract_file( struct AdfVolume * const vol,
         if (fd < 0) {
             print_error(out);
             rc = ADF_RC_ERROR;
-            goto error_handler;
+            goto clean_up;
         }
     }
 
@@ -247,17 +247,17 @@ ADF_RETCODE extract_file( struct AdfVolume * const vol,
             fprintf(stderr, "%s: error reading %s at %u\n",
                     args.adf_file, filename, adfFileGetPos(f));
             rc = ADF_RC_ERROR;
-            goto error_handler;
+            goto clean_up;
         }
 
         if (write(fd, buf, n) != n) {
             print_error(out);
             rc = ADF_RC_ERROR;
-            goto error_handler;
+            goto clean_up;
         }
     }
 
-error_handler:
+clean_up:
     if ( fd && !args.pipe_mode ) close(fd);
     if (f) adfFileClose(f);
 

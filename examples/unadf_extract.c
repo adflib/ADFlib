@@ -125,7 +125,7 @@ ADF_RETCODE extract_tree( struct AdfVolume * const vol,
 
 /* follows a path to a file on disk and extracts just that file */
 ADF_RETCODE extract_filepath( struct AdfVolume * const vol,
-                       char * const             filepath )
+                              char * const             filepath )
 {
 #ifdef DEBUG_UNADF
     fprintf( stderr, "%s: path '%s'\n", __func__, filepath );

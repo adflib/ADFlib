@@ -108,6 +108,9 @@ void set_file_date( const char *const             out,
 static inline int makedir( const char *const path,
                            const mode_t      perms )
 {
+    if ( path != NULL )
+        return -1;
+
 #ifdef DEBUG_UNADF
     fprintf (stderr, "%s: path '%s', perms 0x%08x\n",
              __func__, path, (uint32_t) perms );

@@ -55,7 +55,7 @@
 /* extracts all files, recursing into directories */
 ADF_RETCODE extract_tree( struct AdfVolume * const vol,
                           const struct AdfList    *node,
-                          const char * const        path )
+                          const char * const       path )
 {
 #ifdef DEBUG_UNADF
     fprintf( stderr, "%s: path '%s'\n", __func__, path );
@@ -65,11 +65,13 @@ ADF_RETCODE extract_tree( struct AdfVolume * const vol,
     for (; node; node = node->next) {
         const struct AdfEntry *e = node->content;
 
-        /* extract file or create directory */
+        // get destination path name
         char * const out = output_name(path, e->name);
 #ifdef DEBUG_UNADF
         fprintf( stderr, "%s: out '%s'\n", __func__, out );
 #endif
+
+        // create destination directory
         if ( !args.pipe_mode && make_parent_dir_path( out ) != 0 ) {
             nerrors++;
             // if parent dir cannot be created - cannot extract
@@ -77,6 +79,7 @@ ADF_RETCODE extract_tree( struct AdfVolume * const vol,
             continue;
         }
 
+        // extract file or create directory
         if (e->type == ADF_ST_DIR) {
             if ( !args.pipe_mode ) {
                 printf("x - %s/\n", out);

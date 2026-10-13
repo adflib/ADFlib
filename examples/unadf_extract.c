@@ -240,22 +240,30 @@ ADF_RETCODE extract_file( struct AdfVolume * const vol,
     }
 
     /* copy from volume to local file until EOF */
-    uint8_t buf[EXTRACT_BUFFER_SIZE];
+    uint8_t * const buf = malloc( EXTRACT_BUFFER_SIZE );
+    if ( buf == NULL ) {
+        perror(__func__);
+        rc = ADF_RC_ERROR;
+        goto clean_up;
+    }
+
     while (!adfFileAtEOF(f)) {
         unsigned n = adfFileRead(f, sizeof(buf), buf);
         if (n != sizeof(buf) && !adfFileAtEOF(f)) {
             fprintf(stderr, "%s: error reading %s at %u\n",
                     args.adf_file, filename, adfFileGetPos(f));
             rc = ADF_RC_ERROR;
-            goto clean_up;
+            break;
         }
 
         if (write(fd, buf, n) != n) {
             print_error(out);
             rc = ADF_RC_ERROR;
-            goto clean_up;
+            break;
         }
     }
+
+    free( buf );
 
 clean_up:
     if ( fd && !args.pipe_mode ) close(fd);

@@ -42,8 +42,8 @@
 void set_file_date( const char *const            out,
                     const struct AdfEntry *const e );
 
-void mkdir_if_needed( const char *const path,
-                      const mode_t      perms );
+int mkdir_if_needed( const char *const path,
+                     const mode_t      perms );
 
 int make_dir_tree( const char * const dirpath,
                    const char         dirsep );

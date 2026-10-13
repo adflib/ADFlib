@@ -149,15 +149,36 @@ int make_dir_tree( const char * const dirpath,
 }
 
 /* creates directory, if it does not already exist */
-void mkdir_if_needed( const char * const path,
-                      const mode_t       perms )
+int mkdir_if_needed( const char * const path,
+                     const mode_t       perms )
 {
+#ifdef DEBUG_UNADF
+    fprintf( stderr, "%s: '%s': ", __func__, path );
+#endif
     struct stat st;
-    if (stat(path, &st) != 0 || !S_ISDIR(st.st_mode)) {
-        if (makedir(path, perms) != 0) {
-            print_error(path);
+    if ( stat(path, &st) == 0 ) {
+        if ( S_ISDIR(st.st_mode) ) {
+#ifdef DEBUG_UNADF
+            fprintf( stderr, "already exists.\n" );
+#endif
+            return 0;   // (directory already there - success)
+        } else {
+#ifdef DEBUG_UNADF
+            fprintf( stderr, "something else with the same name - error!\n" );
+#endif
+            return -1;  // (something else there (???) - error!)
         }
     }
+
+    if ( makedir(path, perms) != 0 ) {
+        print_error(path);
+        return -1;
+    }
+#ifdef DEBUG_UNADF
+    else
+        fprintf( stderr, "OK.\n" );
+#endif
+    return 0;
 }
 
 

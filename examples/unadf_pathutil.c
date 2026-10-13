@@ -96,16 +96,6 @@ char * output_name( const char *const path,
     if ( args.win32_mangle )
         fix_win32_path( out );
 
-    if ( !args.pipe_mode ) {
-        /* create directories leading up to the leaf name, if needed */
-        char *last_slash = strrchr( out, DIRSEP );
-        if ( last_slash ) {
-            *last_slash = '\0';                 // temp. cut off leaf name
-            make_dir_tree( out, DIRSEP );
-            *last_slash = DIRSEP;
-        }
-    }
-
     return out;
 }
 

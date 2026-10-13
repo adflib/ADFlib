@@ -70,6 +70,13 @@ ADF_RETCODE extract_tree( struct AdfVolume * const vol,
 #ifdef DEBUG_UNADF
         fprintf( stderr, "%s: out '%s'\n", __func__, out );
 #endif
+        if ( !args.pipe_mode && make_parent_dir_path(out, '/' ) != 0 ) {
+            nerrors++;
+            // if parent dir cannot be created - cannot extract
+            free(out);
+            continue;
+        }
+
         if (e->type == ADF_ST_DIR) {
             if ( !args.pipe_mode ) {
                 printf("x - %s/\n", out);
@@ -113,6 +120,9 @@ ADF_RETCODE extract_tree( struct AdfVolume * const vol,
 ADF_RETCODE extract_filepath( struct AdfVolume * const vol,
                        char * const             filepath )
 {
+#ifdef DEBUG_UNADF
+    fprintf( stderr, "%s: path '%s'\n", __func__, filepath );
+#endif
     assert( filepath != NULL );
     assert( vol != NULL );
 
@@ -161,6 +171,12 @@ ADF_RETCODE extract_filepath( struct AdfVolume * const vol,
             out = output_name(filepath, element);
         }
 
+        if ( !args.pipe_mode && make_parent_dir_path(out, '/' ) != 0 ) {
+            adfFreeEntry(entry);
+            free(out);
+            return ADF_RC_ERROR;
+        }
+
         rc = extract_file(vol, element, out, permissions(entry));
         adfFreeEntry(entry);
         free(out);
@@ -175,6 +191,11 @@ ADF_RETCODE extract_file( struct AdfVolume * const vol,
                           const char * const       out,
                           const mode_t             perms )
 {
+#ifdef DEBUG_UNADF
+    fprintf( stderr, "%s: filename '%s', destination '%s'\n",
+             __func__, filename, out );
+#endif
+
     ADF_RETCODE rc = ADF_RC_OK;
 
     struct AdfFile * const f = adfFileOpen(vol, filename, ADF_FILE_MODE_READ);

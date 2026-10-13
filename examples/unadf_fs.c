@@ -181,6 +181,26 @@ int mkdir_if_needed( const char * const path,
     return 0;
 }
 
+/* create directory path (if needed) leading to the basename
+   (the last name in the given path).
+
+   return value: 0 - success, -1 - failure */
+int make_parent_dir_path( char * const path,
+                          const char   dirsep )
+{
+#ifdef DEBUG_UNADF
+    fprintf( stderr, "%s: '%s'\n", __func__, path );
+#endif
+    char *last_sep = strrchr( path, dirsep );
+    int rc = 0;
+    if ( last_sep ) {
+        *last_sep = '\0';                 // temp. cut off leaf name
+        rc = make_dir_tree( path, dirsep );
+        *last_sep = dirsep;
+    }
+
+    return rc;
+}
 
 /* convert amiga permissions to unix permissions */
 mode_t permissions( const struct AdfEntry * const e )

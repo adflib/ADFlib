@@ -48,6 +48,9 @@ int mkdir_if_needed( const char *const path,
 int make_dir_tree( const char * const dirpath,
                    const char         dirsep );
 
+int make_parent_dir_path( char * const path,
+                          const char   dirsep );
+
 mode_t permissions( const struct AdfEntry * const e );
 
 void set_permissions( const char * const path,

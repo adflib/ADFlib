@@ -56,7 +56,7 @@ int main( const int          argc,
     if (adfDevMount(dev) != ADF_RC_OK) {
         fprintf(stderr, "%s: can't mount device\n", args.adf_file);
         rc = EXIT_FAILURE;
-        goto error_handler;
+        goto clean_up;
     }
     if ( !args.pipe_mode ) {
         print_device(dev);
@@ -69,7 +69,7 @@ int main( const int          argc,
         fprintf(stderr, "%s: volume %d is invalid (device has %d volume(s))\n",
                 args.adf_file, args.vol_number, dev->nVol);
         rc = EXIT_FAILURE;
-        goto error_handler;
+        goto clean_up;
     }
 
     struct AdfVolume * const vol = adfVolMount( dev, args.vol_number,
@@ -78,7 +78,7 @@ int main( const int          argc,
         fprintf(stderr, "%s: can't mount volume %d\n",
                 args.adf_file, args.vol_number);
         rc = EXIT_FAILURE;
-        goto error_handler;
+        goto clean_up;
     }
     if ( !args.pipe_mode ) {
         print_volume(vol);
@@ -87,7 +87,7 @@ int main( const int          argc,
     if ( args.pipe_mode && !args.file_list ) {
         fprintf(stderr, "can't use pipe mode without giving a file name to extract\n");
         rc = EXIT_FAILURE;
-        goto error_handler;
+        goto clean_up;
     }
 
     if ( args.list_mode || args.list_all ) {
@@ -148,7 +148,7 @@ int main( const int          argc,
         }
     }
 
-error_handler:
+clean_up:
     if (vol) adfVolUnMount(vol);
     if (dev && dev->mounted) adfDevUnMount(dev);
     if (dev) adfDevClose(dev);

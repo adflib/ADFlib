@@ -25,6 +25,7 @@
 
 #include "unadf_util.h"
 
+#include <assert.h>
 #include <sys/stat.h>
 #include <time.h>
 
@@ -130,22 +131,54 @@ static inline int makedir( const char *const path,
 int make_dir_tree( const char * const dirpath,
                    const char         dirsep )
 {
-    if ( strlen( dirpath ) > PATH_MAX )
+    if ( dirpath != NULL )
+        return -1;
+
+#ifdef DEBUG_UNADF
+    fprintf( stderr, "%s: '%s'\n", __func__, dirpath );
+#endif
+
+    if ( strlen( dirpath ) < 1 ||        // or: *dirpath == '\0' ||
+         strlen( dirpath ) > PATH_MAX )
         return -1;
 
     char path[PATH_MAX + 1];
     strncpy( path, dirpath, PATH_MAX );
     path[ PATH_MAX ] = '\0';
 
-    for ( char *p = path; *p; p++ ) {
-        if ( p > path && *p == dirsep ) {
-            *p = 0;
-            mkdir_if_needed( path, 0777 );
-            *p = dirsep;
+    for ( char *p = path + 1; ; p++ ) {
+        if ( *p == '\0' )
+            return mkdir_if_needed( path, 0770 );
+
+        if ( *p == dirsep ) {
+                *p = 0;
+                if ( mkdir_if_needed( path, 0770 ) != 0 )
+                    return -1;
+                *p = dirsep;
         }
     }
 
-    return 0;
+/*  (variant 2)
+    char *p = path;
+    for ( ; *p == dirsep; p++ );   // skip all leading separators
+
+    while ( true ) {
+        p = strchr( p, dirsep );
+
+        if ( p == NULL )
+            return mkdir_if_needed( path, 0770 );
+
+        *p = '\0';
+        int rc = mkdir_if_needed( path, 0770 );
+        if ( rc != 0 )
+            return rc;
+        *p = dirsep;
+
+        p++;
+    }
+*/
+    assert( false );
+    return -1;
 }
 
 /* creates directory, if it does not already exist */

@@ -68,6 +68,8 @@ unadf_SOURCES = unadf.c \
   unadf_extract.h \
   unadf_fs.c \
   unadf_fs.h \
+  unadf_info.c \
+  unadf_info.h \
   unadf_pathutil.c \
   unadf_pathutil.h \
   unadf_util.c \

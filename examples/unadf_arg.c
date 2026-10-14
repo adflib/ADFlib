@@ -48,9 +48,15 @@ void parse_args( const int                  argc,
             }
 
             switch (option) {
-            case 'v':
-                args.vol_number = atoi( argv[i + 1] );
+            case 'v': {
+                char *endptr;
+                args.vol_number = (int) strtol(argv[i + 1], &endptr, 10);
+                if ( *endptr != 0 || args.vol_number < 0 ) {
+                    fprintf(stderr, "Invalid volume number: %s\n", argv[i + 1]);
+                    exit(1);
+                }
                 break;
+            }
             case 'd':
                 args.extract_dir = argv[i + 1];
                 break;

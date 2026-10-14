@@ -69,7 +69,7 @@ int main( const int          argc,
         fprintf(stderr, "%s: volume %d is invalid (device has %d volume(s))\n",
                 args.adf_file, args.vol_number, dev->nVol);
         rc = EXIT_FAILURE;
-        goto clean_up;
+        goto clean_up_dev;
     }
 
     struct AdfVolume * const vol = adfVolMount( dev, args.vol_number,
@@ -150,6 +150,8 @@ int main( const int          argc,
 
 clean_up:
     if (vol) adfVolUnMount(vol);
+
+clean_up_dev:
     if (dev && dev->mounted) adfDevUnMount(dev);
     if (dev) adfDevClose(dev);
     if ( args.file_list ) adfListFree( args.file_list );

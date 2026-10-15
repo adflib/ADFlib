@@ -21,7 +21,7 @@
  *
  */
 
-#include "unadf_pathutil.h"
+#include "unadf_path.h"
 
 #include "unadf_arg.h"
 #include "unadf_fs.h"

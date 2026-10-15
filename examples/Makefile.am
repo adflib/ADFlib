@@ -70,8 +70,8 @@ unadf_SOURCES = unadf.c \
   unadf_fs.h \
   unadf_info.c \
   unadf_info.h \
-  unadf_pathutil.c \
-  unadf_pathutil.h \
+  unadf_path.c \
+  unadf_path.h \
   unadf_util.c \
   unadf_util.h \
   unadf_win32.c \

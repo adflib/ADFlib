@@ -24,7 +24,7 @@
 #include "unadf_info.h"
 
 #include "unadf_arg.h"
-#include "unadf_pathutil.h"
+#include "unadf_path.h"
 
 #include <stdio.h>
 #include <stdlib.h>

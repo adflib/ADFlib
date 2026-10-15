@@ -56,7 +56,7 @@ int main( const int          argc,
     if (adfDevMount(dev) != ADF_RC_OK) {
         fprintf(stderr, "%s: can't mount device\n", args.adf_file);
         rc = EXIT_FAILURE;
-        goto clean_up;
+        goto clean_up_dev;
     }
     if ( !args.pipe_mode ) {
         print_device(dev);

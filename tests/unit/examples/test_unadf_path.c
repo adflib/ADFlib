@@ -53,8 +53,8 @@ START_TEST( test_fix_win32_name  )
         { "COM9\0", "COM9_" },
         { "LPT7\0", "LPT7_" },
         { "lpt5.ext\0", "lpt5_.ext" },
-        { "com3.com3.ext\0", "com3_.com3.ext" },  // ???
-        { "com3.com4.ext\0", "com3_.com4.ext" },  // ???
+        { "com3.com3.ext\0", "com3.com3.ext" },  // unchanged(!)
+        { "com3.com4.ext\0", "com3.com4.ext" },  // unchanged(!)
     };
     const unsigned NTESTS = sizeof( test_data ) / sizeof( test_data_t );
 

@@ -125,7 +125,7 @@ void fix_win32_name( char *const name )
     }
 
     /* temporarily remove file extension */
-    char *ext = strchr(name, '.');
+    char *ext = strrchr(name, '.');
     if (ext) {
         *ext = '\0';
     }

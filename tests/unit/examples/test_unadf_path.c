@@ -16,7 +16,7 @@ START_TEST( test_check_framework ) {
 END_TEST
 
 
-START_TEST( test_fix_win32_name  )
+START_TEST( test_replace_win32_forbidden_characters )
 {
     typedef struct test_data_s {
         const char
@@ -43,6 +43,39 @@ START_TEST( test_fix_win32_name  )
 
         // extension
         { "mul.tiple.dots", "mul.tiple.dots" },
+    };
+    const unsigned NTESTS = sizeof( test_data ) / sizeof( test_data_t );
+
+    char mangled[ MAX_TEST_STR_SIZE + 1 ];
+    for ( unsigned i = 0; i < NTESTS; ++i ) {
+#ifdef DEBUG_TEST_UNADF_PATH
+        fprintf( stderr, "case %d:\n  input:    %s\n",
+                 i, test_data[ i ].input );
+#endif
+        strncpy( mangled, test_data[ i ].input, MAX_TEST_STR_SIZE );
+        mangled[ MAX_TEST_STR_SIZE ] = '\0';
+
+        replace_win32_forbidden_characters( mangled );
+
+#ifdef DEBUG_TEST_UNADF_PATH
+        fprintf( stderr, "  output:   %s\n  expected: %s\n",
+                 mangled, test_data[ i ].output );
+#endif
+        ck_assert_str_eq( mangled, test_data[ i ].output );
+    }
+}
+END_TEST
+
+START_TEST( test_change_win32_reserved_names )
+{
+    typedef struct test_data_s {
+        const char
+            *const input,
+            *const output;
+    } test_data_t;
+
+    test_data_t test_data[] = {
+        { "no-change", "no-change" },
 
         // forbidden names
         { "CON\0", "CON_" },
@@ -67,7 +100,7 @@ START_TEST( test_fix_win32_name  )
         strncpy( mangled, test_data[ i ].input, MAX_TEST_STR_SIZE );
         mangled[ MAX_TEST_STR_SIZE ] = '\0';
 
-        fix_win32_name( mangled );
+        change_win32_reserved_names( mangled );
 
 #ifdef DEBUG_TEST_UNADF_PATH
         fprintf( stderr, "  output:   %s\n  expected: %s\n",
@@ -78,6 +111,7 @@ START_TEST( test_fix_win32_name  )
 }
 END_TEST
 
+
 Suite * unadf_suite(void)
 {
     Suite *const suite = suite_create( "unadf" );
@@ -86,8 +120,12 @@ Suite * unadf_suite(void)
     tcase_add_test( tcase, test_check_framework );
     suite_add_tcase( suite, tcase );
 
-    tcase = tcase_create( "unadf fix_win32_name" );
-    tcase_add_test( tcase, test_fix_win32_name );
+    tcase = tcase_create( "unadf test_replace_win32_forbidden_characters" );
+    tcase_add_test( tcase, test_replace_win32_forbidden_characters );
+    suite_add_tcase( suite, tcase );
+
+    tcase = tcase_create( "unadf test_change_win32_reserved_names" );
+    tcase_add_test( tcase, test_change_win32_reserved_names );
     suite_add_tcase( suite, tcase );
 
     return suite;

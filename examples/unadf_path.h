@@ -30,3 +30,5 @@ char * output_name( const char *const path,
                     const char *const name );
 
 void fix_win32_name( char *const name );
+void replace_win32_forbidden_characters( char *const name );
+void change_win32_reserved_names( char *const name );

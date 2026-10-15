@@ -108,7 +108,14 @@ char * output_name( const char *const path,
  *
  * In this last case, the name will be _extended_ by 1 character!
  */
+
 void fix_win32_name( char *const name )
+{
+    replace_win32_forbidden_characters( name );
+    change_win32_reserved_names( name );
+}
+
+void replace_win32_forbidden_characters( char *const name )
 {
     /* work forwards through name, replacing forbidden characters */
     char *o;
@@ -123,7 +130,12 @@ void fix_win32_name( char *const name )
     for (o--; o >= name && (*o == '.' || *o == ' '); o--) {
        *o = '_';
     }
+}
 
+/* the name, if changed, is _extended_ by 1 character(!),
+   the memory space for that must be available(!!!) */
+void change_win32_reserved_names( char *const name )
+{
     /* temporarily remove file extension */
     char *ext = strrchr(name, '.');
     if (ext) {
@@ -146,7 +158,7 @@ void fix_win32_name( char *const name )
            }
            else {
                /* no extension: append underscore, e.g. CON -> CON_ */
-               o = &name[strlen(name)];
+               char *o = &name[ strlen(name) ];
                *o++ = '_';
                *o++ = '\0';
            }

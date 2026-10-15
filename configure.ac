@@ -152,5 +152,6 @@ AC_CONFIG_FILES([Makefile
                  tests/examples2/Makefile
                  tests/regr/Makefile
                  tests/unit/Makefile
+                 tests/unit/examples/Makefile
                  adflib.pc])
 AC_OUTPUT

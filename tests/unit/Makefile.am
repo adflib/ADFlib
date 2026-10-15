@@ -1,4 +1,10 @@
 
+SUBDIRS =
+
+if EXAMPLES
+SUBDIRS += examples
+endif
+
 AUTOMAKE_OPTIONS = subdir-objects
 
 AM_CPPFLAGS = -std=c99 -Wall -Wextra -pedantic \

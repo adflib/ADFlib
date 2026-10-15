@@ -40,6 +40,7 @@ message( STATUS "Check LDFLAGS: ${CHECK_LDFLAGS}" )
 add_compile_options( ${CHECK_CFLAGS} )
 #endif()
 
+add_subdirectory( examples )
 
 add_executable( test_adflib
                 test_adflib.c )

@@ -35,6 +35,8 @@
 #  if defined _MSC_VER
 #    define strcasecmp _stricmp
 #  endif
+#else
+#  include <strings.h>
 #endif  // WIN32
 
 static void fix_win32_path( char *const name );
@@ -106,7 +108,7 @@ char * output_name( const char *const path,
  *
  * In this last case, the name will be _extended_ by 1 character!
  */
-static void fix_win32_name( char *const name )
+void fix_win32_name( char *const name )
 {
     /* work forwards through name, replacing forbidden characters */
     char *o;

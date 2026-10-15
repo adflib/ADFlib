@@ -146,7 +146,7 @@ ADF_RETCODE extract_filepath( struct AdfVolume * const vol,
     char *element;
     for (element = p; *p; p++) {
         if (*p == '/') {
-            *p = 0;
+            *p = '\0';
             if (*element) {
                 if (adfChangeDir(vol, element) != ADF_RC_OK) {
                     fprintf(stderr, "%s: can't find directory %s in volume\n",
@@ -174,7 +174,7 @@ ADF_RETCODE extract_filepath( struct AdfVolume * const vol,
             out = output_name("", element);
         }
         else {
-            element[-1] = 0; /* split path and file */
+            element[-1] = '\0'; /* split path and file */
             out = output_name(filepath, element);
         }
 

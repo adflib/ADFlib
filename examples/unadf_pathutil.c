@@ -125,7 +125,7 @@ static void fix_win32_name( char *const name )
     /* temporarily remove file extension */
     char *ext = strchr(name, '.');
     if (ext) {
-        *ext = 0;
+        *ext = '\0';
     }
 
     /* is the name (excluding extension) a reserved name in Windows? */
@@ -146,7 +146,7 @@ static void fix_win32_name( char *const name )
                /* no extension: append underscore, e.g. CON -> CON_ */
                o = &name[strlen(name)];
                *o++ = '_';
-               *o++ = 0;
+               *o++ = '\0';
            }
            return;
        }

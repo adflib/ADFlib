@@ -40,8 +40,6 @@ message( STATUS "Check LDFLAGS: ${CHECK_LDFLAGS}" )
 add_compile_options( ${CHECK_CFLAGS} )
 #endif()
 
-add_subdirectory( examples )
-
 add_executable( test_adflib
                 test_adflib.c )
 
@@ -178,3 +176,5 @@ add_test( test_file_seek             test_file_seek )
 add_test( test_file_seek_after_write test_file_seek_after_write )
 add_test( test_file_truncate         test_file_truncate )
 add_test( test_file_truncate2        test_file_truncate2 )
+
+add_subdirectory( examples )

@@ -30,6 +30,10 @@
 
 #include <stdlib.h>
 
+#ifdef WIN32 && !defined(__MINGW32__) && !defined(_CYGWIN)
+#  define PATH_MAX _MAX_PATH
+#endif
+
 int main( const int          argc,
           const char * const argv[] )
 {

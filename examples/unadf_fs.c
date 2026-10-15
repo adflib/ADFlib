@@ -37,6 +37,7 @@
 #  if !defined(__MINGW32__) && !defined(_CYGWIN)
 #    include <io.h>         // for open(), write(), ...
      typedef uint32_t mode_t;
+#    define PATH_MAX _MAX_PATH
 #  endif
 
 #  if defined _MSC_VER
@@ -260,7 +261,7 @@ void set_permissions( const char * const path,
 //    fprintf (stderr, "%s: real\n", __func__ );
 }
 #else
-#warning "No chmod() - unadf won't set permissions."
+//#warning "No chmod() - unadf won't set permissions."
 void set_permissions( const char * const path,
                       const mode_t       perms )
 {

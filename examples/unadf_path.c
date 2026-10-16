@@ -59,9 +59,12 @@ char * join_path( const char *const path,
 char * output_name( const char *const path,
                     const char *const name )
 {
-    /* maybe (extract_dir + "/") + path + "/" + name + maybe "_" + "\0" */
+    /*         maybe                              maybe
+                 |                                  |
+       (extract_dir + "/") + (path + "/") + name + "_" + "\0"
+                      +1             +1            +1     +1   -> length +4 */
     const size_t dirlen = ( args.extract_dir ? strlen(args.extract_dir) + 1 : 0 );
-    char *const out = malloc(dirlen + strlen(path) + strlen(name) + 3);
+    char *const out = malloc( dirlen + strlen(path) + strlen(name) + 4 );
     if (!out) {
         print_error( args.adf_file );
         exit(1);

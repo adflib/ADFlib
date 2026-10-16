@@ -26,24 +26,19 @@
 #include "adflib.h"
 
 #ifdef WIN32
-
 #  include <windows.h>
-
- //#if !defined(__GNUC__)
-#  if !defined(__MINGW32__) && !defined(_CYGWIN)
-//#    include <io.h>         // for open(), write(), ...
-     typedef uint32_t mode_t;
-#  endif
-
-#else
-#  include <sys/types.h>
-#endif
-
-#ifdef WIN32
 #  define DIRSEP '\\'
 #else
 #  define DIRSEP '/'
 #endif
+
+//#if !defined(__GNUC__)
+#if defined(WIN32) && !defined(__MINGW32__) && !defined(_CYGWIN)
+     typedef uint32_t mode_t;
+#else
+#  include <sys/types.h>
+#endif
+
 
 void set_file_date( const char *const            out,
                     const struct AdfEntry *const e );

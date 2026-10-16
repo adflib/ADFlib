@@ -30,24 +30,16 @@
 #include <time.h>
 
 #ifdef WIN32
-
-//#include <windows.h>
-
- //#if !defined(__GNUC__)
+//#if !defined(__GNUC__)
 #  if !defined(__MINGW32__) && !defined(_CYGWIN)
 #    include <io.h>         // for open(), write(), ...
-     typedef uint32_t mode_t;
 #    define PATH_MAX _MAX_PATH
 #  endif
-
 #  if defined _MSC_VER
 #    include <direct.h>     // for _mkdir()
 #  endif
-
 #  define S_ISDIR(m) (((m) & S_IFMT) == S_IFDIR)
-
 #  include "unadf_win32.h"
-
 #else
 #  include <sys/time.h>
 #  include <unistd.h>

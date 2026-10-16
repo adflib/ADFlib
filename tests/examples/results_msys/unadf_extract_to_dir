@@ -30,7 +30,7 @@ x - TEMPDIR/x\s/
 x - TEMPDIR/x\s\.cshrc
 x - TEMPDIR/x\s\aliases
 x - TEMPDIR/x\s\.login
-x - TEMPDIR/x\s\startup-sequence
+x - TEMPDIR/x\s/startup-sequence
 x - TEMPDIR/x\libs/
 x - TEMPDIR/x\libs\arp.library
 x - TEMPDIR/x\libs\asl.library

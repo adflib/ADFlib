@@ -5,7 +5,8 @@ on:
     branches: [ "master", "devel",
       "citest",
       "citest-autotools",
-      "citest-autotools-msys2" ]
+      "citest-autotools-msys2",
+      "citest-windows" ]
     tags:
       - '**'
   pull_request:

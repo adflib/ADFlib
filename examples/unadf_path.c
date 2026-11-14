@@ -110,6 +110,16 @@ char * output_name( const char *const path,
  *    extension, insert an underscore (vestiges of CP/M retained by Windows)
  *
  * In this last case, the name will be _extended_ by 1 character!
+ *
+ * More info on this:
+ *  https://stackoverflow.com/questions/1976007/what-characters-are-forbidden-in-windows-and-linux-directory-names
+ *
+ * Note that the forbidden characters for names on Amiga filesystems are
+ * (more info: https://adflib.github.io/FAQ/adf_info.html#p42 ):
+ *   - slash ("/") - path elements separator (like in Unix)
+ *   - colon (":") - volume name designator (eg. df0:, dh1: etc.)
+ * so, normally, these characters should not be an issue.
+ * However, there can be some "hacked" disks, which may contain forbidden names...
  */
 
 void fix_win32_name( char *const name )

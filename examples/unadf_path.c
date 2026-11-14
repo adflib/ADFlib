@@ -76,28 +76,32 @@ char * output_name( const char *const path,
         out[dirlen - 1] = DIRSEP;
     }
 
-    /* copy path and name, translating '/' to platform's separator */
-    char *o = &out[dirlen];
-    for ( const char *s = path; *s; s++ ) {
-        *o++ = (*s == '/') ? DIRSEP : *s;
-    }
-    if (*path) {
-        *o++ = DIRSEP;
-    }
-    strcpy(o, name);
+    /* append amiga path (in the volume) and name,
+       then (if necessary/requested) update it */
+    char *const outpath_amiga = &out[ dirlen ];
+    strcpy( outpath_amiga, path );
+    if ( *path && outpath_amiga[ strlen( outpath_amiga ) - 1 ] != '/' )
+        strcat( outpath_amiga, "/" );
+    strcat( outpath_amiga, name );
+
+    /* alter paths that are a problem for Windows */
+    if ( args.win32_mangle )
+        // mangle only amiga part of the path (not user-provided parameter)
+        fix_win32_path( outpath_amiga );
+
+    /* translate '/' to platform's directory path separator (needed only on Windows) */
+#ifdef _WIN32
+    for ( char *s = outpath_amiga; *s; s++ )
+        if ( *s == '/' )
+            *s = DIRSEP;
+#endif
 
     /* search for "../" and change to "xx" to stop directory traversal */
-    for (o = &out[dirlen]; *o; o++) {
+    for ( char *o = &out[ dirlen ]; *o; o++ ) {
         if (o[0] == '.' && o[1] == '.' && (o[2] == '/' || o[2] == '\\')) {
             o[0] = o[1] = 'x';
             o += 2;
         }
-    }
-
-    /* alter paths that are a problem for Windows */
-    if ( args.win32_mangle ) {
-        const unsigned skipc = ( dirlen > 0 ? dirlen + 1 : 0 ); // +1 for the following '/'
-        fix_win32_path( out + skipc );
     }
 
     return out;

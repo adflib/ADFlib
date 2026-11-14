@@ -191,14 +191,16 @@ void change_win32_reserved_names( char *const name )
     }
 }
 
+/* must by called on the original amiga path (before changing path separator
+   to the system one (ie. before changing '/' to '\' on Windows) */
 static void fix_win32_path( char *const path )
 {
     for ( char *name = path; name; ) {
-        char *nextsep = strchr( name, DIRSEP );
+        char *nextsep = strchr( name, '/' );
         if ( nextsep ) {
             *nextsep = '\0';
             fix_win32_name( name );
-            *nextsep = DIRSEP;
+            *nextsep = '/';
             name = nextsep + 1;
         } else {
             fix_win32_name( name );

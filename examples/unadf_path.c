@@ -63,25 +63,32 @@ char * output_name( const char *const path,
                  |                                  |
        (extract_dir + "/") + (path + "/") + name + "_" + "\0"
                       +1             +1            +1     +1   -> length +4 */
-    const size_t dirlen = ( args.extract_dir ? strlen(args.extract_dir) + 1 : 0 );
-    char *const out = malloc( dirlen + strlen(path) + strlen(name) + 4 );
+    size_t dirlen = ( args.extract_dir ? strlen( args.extract_dir ) : 0 );
+    const size_t outbuflen = dirlen + strlen(path) + strlen(name) + 4;
+    char *const out = malloc( outbuflen );
+    memset( out, 0, outbuflen );
     if (!out) {
         print_error( args.adf_file );
         exit(1);
     }
 
-    /* copy user's extract directory if needed */
+    /* copy user's extract directory, if needed */
     if (dirlen) {
         strcpy(out, args.extract_dir );
-        out[dirlen - 1] = DIRSEP;
+        if ( out[ dirlen - 1 ] != DIRSEP ) {
+            out[ dirlen++ ] = DIRSEP;
+            out[ dirlen ] = '\0';
+        }
     }
 
     /* append amiga path (in the volume) and name,
        then (if necessary/requested) update it */
     char *const outpath_amiga = &out[ dirlen ];
-    strcpy( outpath_amiga, path );
-    if ( *path && outpath_amiga[ strlen( outpath_amiga ) - 1 ] != '/' )
-        strcat( outpath_amiga, "/" );
+    if ( path && *path ) {
+        strcpy( outpath_amiga, path );
+        if ( outpath_amiga[ strlen( outpath_amiga ) - 1 ] != '/' )
+            strcat( outpath_amiga, "/" );
+    }
     strcat( outpath_amiga, name );
 
     /* alter paths that are a problem for Windows */
@@ -89,6 +96,13 @@ char * output_name( const char *const path,
         // mangle only amiga part of the path (not user-provided parameter)
         fix_win32_path( outpath_amiga );
 
+    /* translate '/' to platform's directory path separator (needed only on Windows) */
+/*#ifdef _WIN32
+    for ( char *s = outpath_amiga; *s; s++ )
+        if ( *s == '/' )
+            *s = DIRSEP;
+#endif
+*/
     /* search for "../" and change to "xx" to stop directory traversal */
     for ( char *o = &out[ dirlen ]; *o; o++ ) {
         if (o[0] == '.' && o[1] == '.' && (o[2] == '/' || o[2] == '\\')) {

@@ -95,8 +95,10 @@ char * output_name( const char *const path,
     }
 
     /* alter paths that are a problem for Windows */
-    if ( args.win32_mangle )
-        fix_win32_path( out );
+    if ( args.win32_mangle ) {
+        const unsigned skipc = ( dirlen > 0 ? dirlen + 1 : 0 ); // +1 for the following '/'
+        fix_win32_path( out + skipc );
+    }
 
     return out;
 }

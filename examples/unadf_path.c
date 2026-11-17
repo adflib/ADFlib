@@ -97,12 +97,13 @@ char * output_name( const char *const path,
         fix_win32_path( outpath_amiga );
 
     /* translate '/' to platform's directory path separator (needed only on Windows) */
-/*#ifdef _WIN32
+#ifdef _WIN32
+#warning "output_name() - windows path separator"
     for ( char *s = outpath_amiga; *s; s++ )
         if ( *s == '/' )
             *s = DIRSEP;
 #endif
-*/
+
     /* search for "../" and change to "xx" to stop directory traversal */
     for ( char *o = &out[ dirlen ]; *o; o++ ) {
         if (o[0] == '.' && o[1] == '.' && (o[2] == '/' || o[2] == '\\')) {
